@@ -1,0 +1,20 @@
+name: null
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - gh
+  - git
+  - ipython-sql
+  - jupyterlab
+  - jupyterlab-git
+  - matplotlib
+  - nodejs
+  - pandas
+  - pip
+  - pip:
+    - -r file:requirements.txt
+  - python
+  - xeus-python
