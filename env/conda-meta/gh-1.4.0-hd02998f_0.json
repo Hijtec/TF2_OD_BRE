@@ -1,0 +1,43 @@
+{
+  "build": "hd02998f_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [],
+  "extracted_package_dir": "C:\\Users\\cernil\\Anaconda3\\pkgs\\gh-1.4.0-hd02998f_0",
+  "features": "",
+  "files": [
+    "bin/gh.exe",
+    ".nonadmin"
+  ],
+  "fn": "gh-1.4.0-hd02998f_0.tar.bz2",
+  "license": "Apache-2.0",
+  "license_family": "APACHE",
+  "link": {
+    "source": "C:\\Users\\cernil\\Anaconda3\\pkgs\\gh-1.4.0-hd02998f_0",
+    "type": 1
+  },
+  "md5": "9ad26cc865e179c2e9331b0380897d16",
+  "name": "gh",
+  "package_tarball_full_path": "C:\\Users\\cernil\\Anaconda3\\pkgs\\gh-1.4.0-hd02998f_0.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "bin/gh.exe",
+        "path_type": "hardlink",
+        "sha256": "113ee7f938e50c7a4a061dc90e3b85b3fdd8336b5a0fd7c86ed4e8d7c711efa5",
+        "sha256_in_prefix": "113ee7f938e50c7a4a061dc90e3b85b3fdd8336b5a0fd7c86ed4e8d7c711efa5",
+        "size_in_bytes": 23123456
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "gh",
+  "sha256": "48956defdb7850b63e1b833a997f34eb08e3a2a0ae2ace5540f39f9950a31291",
+  "size": 9858087,
+  "subdir": "win-64",
+  "timestamp": 1608061246104,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/gh-1.4.0-hd02998f_0.tar.bz2",
+  "version": "1.4.0"
+}

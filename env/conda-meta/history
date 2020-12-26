@@ -1,0 +1,53 @@
+==> 2020-12-26 15:37:09 <==
+# cmd: C:\Users\cernil\Anaconda3\Scripts\conda-env-script.py create --prefix env --file environment.yml --force
+# conda version: 4.9.2
++conda-forge/noarch::cycler-0.10.0-py_2
++conda-forge/noarch::olefile-0.46-pyh9f0ad1d_1
++conda-forge/noarch::pip-20.3.3-pyhd8ed1ab_0
++conda-forge/noarch::pyparsing-2.4.7-pyh9f0ad1d_0
++conda-forge/noarch::python-dateutil-2.8.1-py_0
++conda-forge/noarch::pytz-2020.5-pyhd8ed1ab_0
++conda-forge/noarch::six-1.15.0-pyh9f0ad1d_0
++conda-forge/noarch::wheel-0.36.2-pyhd3deb0d_0
++conda-forge/win-64::ca-certificates-2020.12.5-h5b45459_0
++conda-forge/win-64::certifi-2020.12.5-py38haa244fe_0
++conda-forge/win-64::freetype-2.10.4-h546665d_0
++conda-forge/win-64::gh-1.4.0-hd02998f_0
++conda-forge/win-64::git-2.29.2-h57928b3_1
++conda-forge/win-64::icu-68.1-h0e60522_0
++conda-forge/win-64::intel-openmp-2020.3-h57928b3_311
++conda-forge/win-64::jpeg-9d-h8ffe710_0
++conda-forge/win-64::kiwisolver-1.3.1-py38hbd9d945_0
++conda-forge/win-64::libblas-3.8.0-21_mkl
++conda-forge/win-64::libcblas-3.8.0-21_mkl
++conda-forge/win-64::libclang-11.0.0-default_h5c34c98_2
++conda-forge/win-64::liblapack-3.8.0-21_mkl
++conda-forge/win-64::libpng-1.6.37-h1d00b33_2
++conda-forge/win-64::libtiff-4.2.0-hc10be44_0
++conda-forge/win-64::lz4-c-1.9.2-h62dcd97_2
++conda-forge/win-64::matplotlib-3.3.3-py38haa244fe_0
++conda-forge/win-64::matplotlib-base-3.3.3-py38h34ddff4_0
++conda-forge/win-64::mkl-2020.4-hb70f87d_311
++conda-forge/win-64::numpy-1.19.4-py38h0cc643e_1
++conda-forge/win-64::openssl-1.1.1i-h8ffe710_0
++conda-forge/win-64::pandas-1.1.5-py38h4c96930_0
++conda-forge/win-64::pillow-8.0.1-py38hd8d9125_0
++conda-forge/win-64::pyqt-5.12.3-py38haa244fe_6
++conda-forge/win-64::pyqt-impl-5.12.3-py38h885f38d_6
++conda-forge/win-64::pyqt5-sip-4.19.18-py38h885f38d_6
++conda-forge/win-64::pyqtchart-5.12-py38h885f38d_6
++conda-forge/win-64::pyqtwebengine-5.12.1-py38h885f38d_6
++conda-forge/win-64::python-3.8.6-h7840368_4_cpython
++conda-forge/win-64::python_abi-3.8-1_cp38
++conda-forge/win-64::qt-5.12.9-h5909a2a_2
++conda-forge/win-64::setuptools-49.6.0-py38h9bdc248_2
++conda-forge/win-64::sqlite-3.34.0-h8ffe710_0
++conda-forge/win-64::tk-8.6.10-h8ffe710_1
++conda-forge/win-64::tornado-6.1-py38h294d835_0
++conda-forge/win-64::vc-14.2-hb210afc_2
++conda-forge/win-64::vs2015_runtime-14.28.29325-h5e1d092_0
++conda-forge/win-64::wincertstore-0.2-py38h32f6830_1005
++conda-forge/win-64::xz-5.2.5-h62dcd97_1
++conda-forge/win-64::zlib-1.2.11-h62dcd97_1010
++conda-forge/win-64::zstd-1.4.5-h1f3a1b7_2
+# update specs: ['pandas', 'matplotlib', 'python=3.8', 'git', 'pip', 'gh']

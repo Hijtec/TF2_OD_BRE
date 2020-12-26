@@ -1,0 +1,52 @@
+{
+  "build": "default_h5c34c98_2",
+  "build_number": 2,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [
+    "clang 11.0.0.*",
+    "clang-tools 11.0.0.*",
+    "llvm 11.0.0.*",
+    "llvm-tools 11.0.0.*",
+    "llvmdev 11.0.0.*"
+  ],
+  "depends": [
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012"
+  ],
+  "extracted_package_dir": "C:\\Users\\cernil\\Anaconda3\\pkgs\\libclang-11.0.0-default_h5c34c98_2",
+  "features": "",
+  "files": [
+    "Library/bin/libclang.dll",
+    ".nonadmin"
+  ],
+  "fn": "libclang-11.0.0-default_h5c34c98_2.tar.bz2",
+  "license": "Apache-2.0 WITH LLVM-exception",
+  "license_family": "Apache",
+  "link": {
+    "source": "C:\\Users\\cernil\\Anaconda3\\pkgs\\libclang-11.0.0-default_h5c34c98_2",
+    "type": 1
+  },
+  "md5": "b2d6e036f163281953068cefac6b14f6",
+  "name": "libclang",
+  "package_tarball_full_path": "C:\\Users\\cernil\\Anaconda3\\pkgs\\libclang-11.0.0-default_h5c34c98_2.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Library/bin/libclang.dll",
+        "path_type": "hardlink",
+        "sha256": "38307bc8f02ff170474bb6d96eeba716ad1315c1f289992bb9cf2b4793133c80",
+        "sha256_in_prefix": "38307bc8f02ff170474bb6d96eeba716ad1315c1f289992bb9cf2b4793133c80",
+        "size_in_bytes": 68531200
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "951e7574db09a60d0ece83ede2a763bd31c8d1a4e3a69b5152b45660dc6385b9",
+  "size": 21858343,
+  "subdir": "win-64",
+  "timestamp": 1605746785648,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/libclang-11.0.0-default_h5c34c98_2.tar.bz2",
+  "version": "11.0.0"
+}

@@ -1,0 +1,49 @@
+{
+  "build": "21_mkl",
+  "build_number": 21,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [
+    "libcblas 3.8.0 21_mkl",
+    "liblapacke 3.8.0 21_mkl",
+    "blas * mkl"
+  ],
+  "depends": [
+    "libblas 3.8.0 21_mkl"
+  ],
+  "extracted_package_dir": "C:\\Users\\cernil\\Anaconda3\\pkgs\\liblapack-3.8.0-21_mkl",
+  "features": "",
+  "files": [
+    "Library/bin/liblapack.dll",
+    ".nonadmin"
+  ],
+  "fn": "liblapack-3.8.0-21_mkl.tar.bz2",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "link": {
+    "source": "C:\\Users\\cernil\\Anaconda3\\pkgs\\liblapack-3.8.0-21_mkl",
+    "type": 1
+  },
+  "md5": "6ef6b80f1f7db5cc345b9e4336798ac6",
+  "name": "liblapack",
+  "package_tarball_full_path": "C:\\Users\\cernil\\Anaconda3\\pkgs\\liblapack-3.8.0-21_mkl.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Library/bin/liblapack.dll",
+        "path_type": "hardlink",
+        "sha256": "21f2fdeba006790c4f7e8d254296e8fb6e67c623d7226ec05747f9217aa769e6",
+        "sha256_in_prefix": "21f2fdeba006790c4f7e8d254296e8fb6e67c623d7226ec05747f9217aa769e6",
+        "size_in_bytes": 17184624
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "de47cd46291f132b8dddc591cd5b149fa627525c8a4d1efa53b036374580bf15",
+  "size": 4070459,
+  "subdir": "win-64",
+  "timestamp": 1605744333805,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/liblapack-3.8.0-21_mkl.tar.bz2",
+  "version": "3.8.0"
+}

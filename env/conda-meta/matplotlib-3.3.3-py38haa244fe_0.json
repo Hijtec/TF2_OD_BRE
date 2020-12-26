@@ -1,0 +1,39 @@
+{
+  "build": "py38haa244fe_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [
+    "matplotlib-base >=3.3.3,<3.3.4.0a0",
+    "pyqt",
+    "python >=3.8,<3.9.0a0",
+    "python_abi 3.8.* *_cp38"
+  ],
+  "extracted_package_dir": "C:\\Users\\cernil\\Anaconda3\\pkgs\\matplotlib-3.3.3-py38haa244fe_0",
+  "features": "",
+  "files": [
+    ".nonadmin"
+  ],
+  "fn": "matplotlib-3.3.3-py38haa244fe_0.tar.bz2",
+  "license": "LicenseRef-PSF-based",
+  "license_family": "PSF",
+  "link": {
+    "source": "C:\\Users\\cernil\\Anaconda3\\pkgs\\matplotlib-3.3.3-py38haa244fe_0",
+    "type": 1
+  },
+  "md5": "132627876c5d320e19e3b9bc9c11bd01",
+  "name": "matplotlib",
+  "package_tarball_full_path": "C:\\Users\\cernil\\Anaconda3\\pkgs\\matplotlib-3.3.3-py38haa244fe_0.tar.bz2",
+  "paths_data": {
+    "paths": [],
+    "paths_version": 1
+  },
+  "requested_spec": "matplotlib",
+  "sha256": "7213e8a626e22206e9e19f83b216ad0bb6c45988123f8ab508040d86218c5afe",
+  "size": 6818,
+  "subdir": "win-64",
+  "timestamp": 1605181080546,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/matplotlib-3.3.3-py38haa244fe_0.tar.bz2",
+  "version": "3.3.3"
+}

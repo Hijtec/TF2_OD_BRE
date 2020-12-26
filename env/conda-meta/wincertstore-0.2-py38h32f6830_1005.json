@@ -1,0 +1,94 @@
+{
+  "build": "py38h32f6830_1005",
+  "build_number": 1005,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.8,<3.9.0a0",
+    "python_abi 3.8.* *_cp38"
+  ],
+  "extracted_package_dir": "C:\\Users\\cernil\\Anaconda3\\pkgs\\wincertstore-0.2-py38h32f6830_1005",
+  "features": "",
+  "files": [
+    "Lib/site-packages/__pycache__/wincertstore.cpython-38.pyc",
+    "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/PKG-INFO",
+    "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/SOURCES.txt",
+    "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/dependency_links.txt",
+    "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/installed-files.txt",
+    "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/top_level.txt",
+    "Lib/site-packages/wincertstore.py",
+    ".nonadmin"
+  ],
+  "fn": "wincertstore-0.2-py38h32f6830_1005.tar.bz2",
+  "license": "PSF-2.0",
+  "license_family": "PSF",
+  "link": {
+    "source": "C:\\Users\\cernil\\Anaconda3\\pkgs\\wincertstore-0.2-py38h32f6830_1005",
+    "type": 1
+  },
+  "md5": "8c253621e1f3121360b00b5ffe4626ff",
+  "name": "wincertstore",
+  "package_tarball_full_path": "C:\\Users\\cernil\\Anaconda3\\pkgs\\wincertstore-0.2-py38h32f6830_1005.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Lib/site-packages/__pycache__/wincertstore.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "48c63db365efc4f548f27ab9030c3cd9ec14a5012c4cc35150dd13cacbf9a62b",
+        "sha256_in_prefix": "48c63db365efc4f548f27ab9030c3cd9ec14a5012c4cc35150dd13cacbf9a62b",
+        "size_in_bytes": 11119
+      },
+      {
+        "_path": "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/PKG-INFO",
+        "path_type": "hardlink",
+        "sha256": "1ad37b968b7a977dc59551920d0a07c7ec0958ee95ccd5702736ca3a51bfe069",
+        "sha256_in_prefix": "1ad37b968b7a977dc59551920d0a07c7ec0958ee95ccd5702736ca3a51bfe069",
+        "size_in_bytes": 5858
+      },
+      {
+        "_path": "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/SOURCES.txt",
+        "path_type": "hardlink",
+        "sha256": "8e78672aef555032dd7c5474e80914d86117a287413bdb92f31a64e56f9d1134",
+        "sha256_in_prefix": "8e78672aef555032dd7c5474e80914d86117a287413bdb92f31a64e56f9d1134",
+        "size_in_bytes": 249
+      },
+      {
+        "_path": "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/dependency_links.txt",
+        "path_type": "hardlink",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "sha256_in_prefix": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "size_in_bytes": 1
+      },
+      {
+        "_path": "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/installed-files.txt",
+        "path_type": "hardlink",
+        "sha256": "2c20d9195722e5f41769fc2f2eb6ea8bf90f9e1594a583d24da61503572e2d97",
+        "sha256_in_prefix": "2c20d9195722e5f41769fc2f2eb6ea8bf90f9e1594a583d24da61503572e2d97",
+        "size_in_bytes": 124
+      },
+      {
+        "_path": "Lib/site-packages/wincertstore-0.2-py3.8.egg-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "6330b5e881ddc7bc6ee0401f560a34224fa8bccd55c87c4dde05cc959451dbe3",
+        "sha256_in_prefix": "6330b5e881ddc7bc6ee0401f560a34224fa8bccd55c87c4dde05cc959451dbe3",
+        "size_in_bytes": 13
+      },
+      {
+        "_path": "Lib/site-packages/wincertstore.py",
+        "path_type": "hardlink",
+        "sha256": "9eb1879f68dcdd125eb0ed737ed331f16e335a6a5208ec9f26fd3dd6220cfd08",
+        "sha256_in_prefix": "9eb1879f68dcdd125eb0ed737ed331f16e335a6a5208ec9f26fd3dd6220cfd08",
+        "size_in_bytes": 11873
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "0649b58a503ce756a8d54350eaacef06ad715e347de089c3c9bb5474deae12c5",
+  "size": 15223,
+  "subdir": "win-64",
+  "timestamp": 1602246477581,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/wincertstore-0.2-py38h32f6830_1005.tar.bz2",
+  "version": "0.2"
+}
