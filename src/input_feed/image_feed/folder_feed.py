@@ -6,9 +6,10 @@ import cv2
 
 from src.utils.path_utils import force_separator_as_path_end
 from src.utils.path_utils import check_path_existence
+from src.input_feed.image_feed.ImageFeed import ImageFeed
 
 
-class DirectoryFeedSync:
+class FolderFeedSync(ImageFeed):
     def __init__(self, image_dir_path=None):
         self.cap = None
         self.image_dir_path = force_separator_as_path_end(image_dir_path)
@@ -29,7 +30,7 @@ class DirectoryFeedSync:
         check_path_existence(image_dir_path, self.__name__)
         self.image_dir_path = force_separator_as_path_end(image_dir_path)
 
-    def get_next_image(self):
+    def get_next_frame(self):
         self.open_directory()
         self.check, frame_raw = self.cap.read()
         if self.check:
@@ -37,8 +38,8 @@ class DirectoryFeedSync:
         else:
             self.frame = None
 
-    def get_image(self):
-        self.get_next_image()
+    def get_frame(self):
+        self.get_next_frame()
         return self.frame
 
     def show_frame(self, repeat=True):
@@ -47,9 +48,8 @@ class DirectoryFeedSync:
         else:
             wait_delay = 0
         while True:
-            cv2.imshow("DirectoryFrame", self.frame)
+            cv2.imshow("FolderFrame", self.frame)
             k = cv2.waitKey(wait_delay)
             if not repeat or k == 27:
                 break
-        cv2.destroyWindow("DirectoryFrame")
-
+        cv2.destroyWindow("FolderFrame")

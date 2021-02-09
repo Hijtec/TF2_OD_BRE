@@ -5,9 +5,10 @@ import acapture
 import cv2
 
 from src.utils.path_utils import check_path_existence
+from src.input_feed.image_feed.ImageFeed import ImageFeed
 
 
-class VideoFeedAsync:
+class VideoFeedAsync(ImageFeed):
     def __init__(self, video_file_path=None, frame_capture=False):
         self.cap = None
         self.video_file_path = video_file_path
@@ -26,6 +27,10 @@ class VideoFeedAsync:
     def set_video_file_path(self, video_file_path):
         check_path_existence(video_file_path, self.__name__)
         self.video_file_path = video_file_path
+
+    def get_frame(self):
+        self.get_next_frame()
+        return self.frame
 
     def get_next_frame(self):
         self.open_video()
