@@ -13,7 +13,7 @@ class CameraFeed:
         if self.cap is None:
             self.cap = acapture.open(self.src)  # /dev/video0 on linux
 
-    def capture_frame(self):
+    def get_next_frame(self):
         self.open_camera_device()
         self.check, frame_raw = self.cap.read()
         if self.check:
@@ -24,9 +24,8 @@ class CameraFeed:
             return None
 
     def start_camera_stream(self):
-        self.open_camera_device()
         while True:
-            self.capture_frame()  # non-blocking
+            self.get_next_frame()  # non-blocking
 
     def get_frame(self):
         return self.frame
