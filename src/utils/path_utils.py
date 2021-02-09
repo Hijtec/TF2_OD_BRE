@@ -1,5 +1,6 @@
 from glob import glob
 from os import path
+from os import sep as sep
 
 
 def get_paths_of_files_with_suffix(dir_path, file_suffix):
@@ -32,3 +33,16 @@ def convert_annotation_path_to_image_path(annotation_path, image_dir_path, img_s
     """
     image_name = extract_image_name(annotation_path, img_suffix)
     return path.join(image_dir_path, image_name)
+
+
+def path_exists(input_path):
+    return True if path.exists(input_path) else False
+
+
+def check_path_existence(input_path, method_name):
+    if path_exists(input_path) is False:
+        raise ValueError(f"Path used in method: {method_name} does not exist.")
+
+
+def force_separator_as_path_end(input_path):
+    return input_path if input_path[-1] == sep else input_path + sep

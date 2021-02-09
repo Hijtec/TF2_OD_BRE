@@ -10,7 +10,7 @@ import cv2
 import imutils
 import numpy as np
 
-from imutlis import contours
+from imutils import contours
 
 
 def adjust_brightness_dynamic(image, brightness=0.0, contrast=0.0):
