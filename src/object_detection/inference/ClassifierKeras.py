@@ -60,7 +60,7 @@ class ClassifierKeras(Classifier):
         self.classifications = None
         self.output_raw_classifications = False
 
-        self.model_path = check_path_existence(model_path, self.__name__)
+        self.model_path = check_path_existence(model_path, self.__class__.__name__)
         self.load_classifier(self.model_path)
 
     def load_classifier(self, detector_path):

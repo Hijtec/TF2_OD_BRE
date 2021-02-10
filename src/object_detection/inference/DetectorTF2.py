@@ -33,7 +33,7 @@ def infer_tf2_detection(tensor_input, model_tf2):
     Returns:
         detections_batch: Dictionary of detections.
     """
-    logging.info(f"Detecting using TF2 model {model_tf2.__name__}")
+    logging.info(f"Detecting using TF2 model {str(model_tf2)}")
     detections_batch = model_tf2(tensor_input)
     return detections_batch
 
@@ -54,14 +54,14 @@ def process_tf2_detection(detections_batch, convert_classes_to_int=True):
         detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
 
 
-class DetectorTF2Detection(Detector):
+class DetectorTF2(Detector):
     def __init__(self, model_path):
         self.model = None
         self.tensor_input = None
         self.detections = None
         self.output_raw_detections = False
 
-        self.model_path = check_path_existence(model_path, self.__name__)
+        self.model_path = check_path_existence(model_path, self.__class__.__name__)
         self.load_detector(self.model_path)
 
     def load_detector(self, detector_path):
