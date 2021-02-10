@@ -4,9 +4,9 @@ This module contains a Class capable of detecting elevator elements in an image.
 import tensorflow as tf
 import numpy as np
 from absl import logging
-from src.main.flags_global import FLAGS
 
-from src.object_detection.inference import inference_tf2
+from src.object_detection.inference import DetectorTF2
+from src.main.flags_global import FLAGS
 
 
 class ElementDetection:
@@ -21,7 +21,7 @@ class ElementDetection:
 
     def __assign_detector(self, model_path):
         if FLAGS.detection_elements_model_type == 'tf2':
-            self.Detector = inference_tf2.DetectorTF2Detection(model_path)
+            self.Detector = DetectorTF2.DetectorTF2(model_path)
         else:
             # TODO: more types support
             raise ValueError('Other detectors not supported, use tf2 type.')
@@ -30,7 +30,7 @@ class ElementDetection:
         """Runs detection on the given image_data.
         :param image_data: Numpy-like array with shape (width, height, n_channels)
         """
-        image_tensor = tf.convert_to_tensor(np.expand_dims(image_data, 0), dtype=tf.float32)
+        image_tensor = tf.convert_to_tensor(np.expand_dims(image_data, 0), dtype=tf.uint8)
         self.detect_next_tensor(image_tensor)
 
     def detect_next_tensor(self, image_tensor):

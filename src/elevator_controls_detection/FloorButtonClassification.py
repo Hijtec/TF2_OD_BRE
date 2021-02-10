@@ -4,8 +4,8 @@ This module contains a Class capable of classifying floor buttons from their ima
 import tensorflow as tf
 import numpy as np
 from absl import logging
+from src.object_detection.inference import ClassifierKeras
 from src.main.flags_global import FLAGS
-from src.object_detection.inference import inference_keras
 
 
 class FloorButtonClassification:
@@ -20,7 +20,7 @@ class FloorButtonClassification:
 
     def __assign_classifier(self, model_path):
         if FLAGS.classification_floor_button_model_type == 'keras':
-            self.Classifier = inference_keras.ClassifierKeras(model_path)
+            self.Classifier = ClassifierKeras.ClassifierKeras(model_path)
         else:
             # TODO: more types support
             raise ValueError('Other detectors not supported, use tf2 type.')
