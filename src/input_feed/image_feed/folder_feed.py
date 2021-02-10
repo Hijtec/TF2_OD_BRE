@@ -1,4 +1,4 @@
-"""A script providing a synchronous folder image feed capability.
+"""A class providing a synchronous folder image feed capability.
 This module contains functions needed for reading an image from Folder.
 """
 import acapture

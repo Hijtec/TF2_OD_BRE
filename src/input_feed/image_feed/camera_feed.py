@@ -1,4 +1,4 @@
-"""A script providing an asynchronous camera image feed capability.
+"""A class providing an asynchronous camera image feed capability.
 This module contains functions needed for reading an image from VideoDevice.
 """
 from src.input_feed.image_feed.ImageFeed import ImageFeed

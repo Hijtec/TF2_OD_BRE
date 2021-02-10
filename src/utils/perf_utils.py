@@ -1,4 +1,5 @@
 import time
+from absl import logging
 
 
 def timer_wrapper(method):
@@ -9,7 +10,9 @@ def timer_wrapper(method):
         if 'log_time' in kwargs:
             process_name = kwargs.get('log_name', method.__name__.upper())
             kwargs['log_time'][process_name] = int((time_exit - time_entry) * 1000)
+            logging.info('%r %2.2f ms' % (method.__name__, (time_exit - time_entry) * 1000))
         else:
             print('%r %2.2f ms' % (method.__name__, (time_exit - time_entry) * 1000))
+            logging.info('%r %2.2f ms' % (method.__name__, (time_exit - time_entry) * 1000))
         return result
     return timed

@@ -1,3 +1,6 @@
+"""Abstract Class ImageFeed.
+This module contains a wrapper class around ImageInput providers.
+"""
 from abc import ABC, abstractmethod
 
 

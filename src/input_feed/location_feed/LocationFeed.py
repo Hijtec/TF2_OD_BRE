@@ -1,3 +1,6 @@
+"""Abstract Class LocationFeed.
+This module contains a wrapper class around LocationInput providers.
+"""
 from abc import ABC, abstractmethod
 
 

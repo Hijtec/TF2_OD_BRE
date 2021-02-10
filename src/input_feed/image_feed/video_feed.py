@@ -1,4 +1,4 @@
-"""A script providing a video image feed capability.
+"""A class providing a video image feed capability.
 This module contains functions needed for reading an image from VideoDevice.
 """
 import acapture
