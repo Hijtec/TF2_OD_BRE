@@ -1,6 +1,12 @@
-import tensorflow as tf
+"""A class providing a Detector capability using TF2 API.
+This module contains a class needed for inference through TensorFlow2 SavedModel.
+"""
 import numpy as np
+import tensorflow as tf
 from absl import logging
+
+from src.object_detection.inference.Detector import Detector
+from src.utils.path_utils import check_path_existence
 from src.utils.perf_utils import timer_wrapper
 
 
@@ -14,22 +20,8 @@ def load_inference_graph_tf2(inference_graph_tf2_dir):
     """
     logging.info(f"Loading TF2 model from \n{inference_graph_tf2_dir}")
     model_tf2 = tf.saved_model.load(inference_graph_tf2_dir)
-    logging.info("Load OK!")
+    logging.info("TF2 SavedModel load OK!")
     return model_tf2
-
-
-@timer_wrapper
-def load_inference_graph_keras(inference_graph_keras_dir):
-    """Loads the inference graph.
-    Args:
-        inference_graph_keras_dir: Path to the Keras inference graph with embedded weights.
-    Returns:
-        model_keras: Loaded model used for inference.
-    """
-    logging.info(f"Loading Keras model from \n{inference_graph_keras_dir}")
-    model_keras = tf.keras.models.load_model(inference_graph_keras_dir)
-    logging.info("Load OK!")
-    return model_keras
 
 
 @timer_wrapper
@@ -44,20 +36,6 @@ def infer_tf2_detection(tensor_input, model_tf2):
     logging.info(f"Detecting using TF2 model {model_tf2.__name__}")
     detections_batch = model_tf2(tensor_input)
     return detections_batch
-
-
-@timer_wrapper
-def infer_keras_classification(tensor_input, model_keras):
-    """Infers the tensor_input through TF2 model.
-    Args:
-        tensor_input: Tensor corresponding to the model input.
-        model_keras: SavedModel of Keras type.
-    Returns:
-        classifications: List of classifications / class score.
-    """
-    logging.info(f"Classifying using Keras model {model_keras.__name__}")
-    classifications = model_keras.predict(tensor_input)
-    return classifications
 
 
 @timer_wrapper
@@ -76,16 +54,33 @@ def process_tf2_detection(detections_batch, convert_classes_to_int=True):
         detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
 
 
-@timer_wrapper
-def process_keras_classification(classifications, evenly_round_classification_scores=True):
-    """Processes the TF2 detections batch
-    Args:
-        classifications: List of classifications / class score.
-        evenly_round_classification_scores: Bool enabling the evenly rounded output of classification
-    Returns:
-        classifications: List of detections / class score.
-    """
-    logging.info(f"Processing Keras classification.")
-    if evenly_round_classification_scores:
-        classifications = np.around(classifications)
-    return classifications
+class DetectorTF2Detection(Detector):
+    def __init__(self, model_path):
+        self.model = None
+        self.tensor_input = None
+        self.detections = None
+        self.output_raw_detections = False
+
+        self.model_path = check_path_existence(model_path, self.__name__)
+        self.load_detector(self.model_path)
+
+    def load_detector(self, detector_path):
+        self.model = load_inference_graph_tf2(detector_path)
+
+    def infer_tensor_input(self, tensor_input):
+        if self.model is None:
+            raise ValueError("Detection TF2 SavedModel has not been loaded.")
+
+        self.tensor_input = tensor_input
+        if self.output_raw_detections is False:
+            detections = infer_tf2_detection(tensor_input, self.model)
+            self.detections = process_tf2_detection(detections)
+        else:
+            self.detections = infer_tf2_detection(tensor_input, self.model)
+
+    def get_detector_output(self):
+        return self.detections
+
+    def visualize_output(self):
+        pass
+        # TODO: visualization library

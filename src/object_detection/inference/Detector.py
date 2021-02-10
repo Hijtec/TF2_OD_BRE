@@ -16,3 +16,7 @@ class Detector(ABC):
     @abstractmethod
     def visualize_output(self):
         pass
+
+    @abstractmethod
+    def get_detector_output(self):
+        pass
