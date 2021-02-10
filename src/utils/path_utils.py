@@ -36,13 +36,16 @@ def convert_annotation_path_to_image_path(annotation_path, image_dir_path, img_s
 
 
 def path_exists(input_path):
-    return True if path.exists(input_path) else False
+    if path.exists(input_path):
+        return True
+    else:
+        return False
 
 
 def check_path_existence(input_path, object_name):
     if path_exists(input_path) is False:
         raise ValueError(f"Path used in method: {object_name} does not exist.")
-    pass
+    return input_path
 
 
 def force_separator_as_path_end(input_path):
