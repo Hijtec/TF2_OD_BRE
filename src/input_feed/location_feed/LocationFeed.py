@@ -12,3 +12,11 @@ class LocationFeed(ABC):
     @abstractmethod
     def get_location(self):
         pass
+
+
+class LocationFeedEmpty(LocationFeed):
+    def get_next_location(self):
+        pass
+
+    def get_location(self):
+        pass

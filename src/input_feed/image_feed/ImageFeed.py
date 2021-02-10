@@ -17,3 +17,13 @@ class ImageFeed(ABC):
     def show_frame(self):
         pass
 
+
+class ImageFeedEmpty(ImageFeed):
+    def get_next_frame(self):
+        pass
+
+    def get_frame(self):
+        pass
+
+    def show_frame(self):
+        pass
