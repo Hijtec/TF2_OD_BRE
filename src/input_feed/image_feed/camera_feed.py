@@ -4,14 +4,15 @@ This module contains functions needed for reading an image from VideoDevice.
 from src.input_feed.image_feed.ImageFeed import ImageFeed
 import acapture
 import cv2
+from src.main.flags_global import FLAGS
 
 
 class CameraFeedAsync(ImageFeed):
-    def __init__(self, cam_src=0):
+    def __init__(self):
         self.cap = None
         self.check = False
         self.frame = []
-        self.src = cam_src
+        self.src = FLAGS.camera_device_used
 
     def open_camera_device(self):
         if self.cap is None:

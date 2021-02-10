@@ -7,12 +7,13 @@ import cv2
 from src.utils.path_utils import force_separator_as_path_end
 from src.utils.path_utils import check_path_existence
 from src.input_feed.image_feed.ImageFeed import ImageFeed
+from src.main.flags_global import FLAGS
 
 
 class FolderFeedSync(ImageFeed):
-    def __init__(self, image_dir_path=None):
+    def __init__(self):
         self.cap = None
-        self.image_dir_path = force_separator_as_path_end(image_dir_path)
+        self.image_dir_path = force_separator_as_path_end(FLAGS.image_input_folder_path)
         self.check = False
         self.frame = []
 

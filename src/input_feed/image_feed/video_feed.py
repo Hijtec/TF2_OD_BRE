@@ -6,12 +6,13 @@ import cv2
 
 from src.utils.path_utils import check_path_existence
 from src.input_feed.image_feed.ImageFeed import ImageFeed
+from src.main.flags_global import FLAGS
 
 
 class VideoFeedAsync(ImageFeed):
-    def __init__(self, video_file_path=None, frame_capture=False):
+    def __init__(self, frame_capture=False):
         self.cap = None
-        self.video_file_path = video_file_path
+        self.video_file_path = FLAGS.image_input_video_path
         self.check = False
         self.frame = []
         self.frame_capture = frame_capture
