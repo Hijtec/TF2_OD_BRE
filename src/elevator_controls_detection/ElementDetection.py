@@ -1,5 +1,5 @@
-"""A script handling the Element Detection .
-This module contains a Class handling the inputs into the system
+"""A class handling the Element Detection.
+This module contains a Class capable of detecting elevator elements in an image.
 """
 import tensorflow as tf
 import numpy as np
