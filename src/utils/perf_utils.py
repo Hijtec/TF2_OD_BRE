@@ -3,9 +3,9 @@ from absl import logging
 
 
 def timer_wrapper(method):
-    def timed(*args,**kwargs):
+    def timed(*args, **kwargs):
         time_entry = time.time()
-        result = method(*args,**kwargs)
+        result = method(*args, **kwargs)
         time_exit = time.time()
         if 'log_time' in kwargs:
             process_name = kwargs.get('log_name', method.__name__.upper())
@@ -15,4 +15,5 @@ def timer_wrapper(method):
             print('%r %2.2f ms' % (method.__name__, (time_exit - time_entry) * 1000))
             logging.info('%r %2.2f ms' % (method.__name__, (time_exit - time_entry) * 1000))
         return result
+
     return timed

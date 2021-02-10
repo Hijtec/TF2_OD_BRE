@@ -2,8 +2,8 @@
 This module contains a Class handling the inputs into the system
 """
 from src.main.flags_global import FLAGS
-from src.input_feed.image_feed import camera_feed, video_feed, folder_feed
-from src.input_feed.location_feed import position_feed
+from src.input_feed.image_feed import ImageFeed, camera_feed, video_feed, folder_feed
+from src.input_feed.location_feed import LocationFeed, position_feed
 
 
 class InputFeed:
@@ -13,7 +13,7 @@ class InputFeed:
         self.data_sources_assigned = False
 
         self.Data = {'ImageData': [], 'LocationData': None}
-        self.DataSources = {'ImageSource': None, 'LocationSource': None}
+        self.DataSources = {'ImageSource': type(ImageFeed), 'LocationSource': type(LocationFeed)}
         self.__assign_sources()
 
     def __assign_sources(self):

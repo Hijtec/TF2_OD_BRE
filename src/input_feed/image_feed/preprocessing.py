@@ -17,6 +17,7 @@ def adjust_brightness_dynamic(image, brightness=0.0, contrast=0.0):
     """Adjust the brightness using imutils utility function."""
     return imutils.adjust_brightness_contrast(image, brightness=brightness, contrast=contrast)
 
+
 def grayscale(image):
     """Grayscales the image."""
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -37,6 +38,9 @@ def canny_edge_extraction(image, sigma=0.33, dilate_iterations=2, erode_iteratio
 
 def contours_extraction_sort(image, edges):
     """Finds contours and sorts them out."""
+    orig_label = None
+    sorted_label = None
+
     clone = image.copy()
     cnts = cv2.findContours(
         edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE

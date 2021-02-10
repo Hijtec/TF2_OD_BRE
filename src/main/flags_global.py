@@ -3,7 +3,8 @@ This module contains all flags used in the project.
 """
 
 from absl import flags
-from absl import app
+# from absl import app
+# TODO: run main as app for flags to be loaded and parsed
 
 # Flag names are globally defined!  So in general, we need to be
 # careful to pick names that are unlikely to be used by other libraries.
@@ -37,14 +38,13 @@ flags.DEFINE_string('detector_elements_model_path', None,
                     'PATH to a SavedModel file capable of detection of elevator elements.')
 flags.DEFINE_enum('detection_elements_model_type', 'tf2',
                   ['tf2', 'reserved'], 'Type of detection model used - RESERVED.')
-# floor button recognition
+# floor button classification
 flags.DEFINE_string('classification_floor_button_model_path', None,
                     'PATH to a SavedModel file capable of classification of elevator floor buttons.')
 flags.DEFINE_enum('classification_floor_button_model_type', 'keras',
                   ['keras', 'reserved'], 'Type of classification model used - RESERVED.')
 # ELEVATOR CONTROLS DETECTION FLAGS END
 #####
-
 
 
 FLAGS = flags.FLAGS
