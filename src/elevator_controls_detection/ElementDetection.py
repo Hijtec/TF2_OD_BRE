@@ -39,6 +39,7 @@ class ElementDetection:
         """
         self.Detector.infer_tensor_input(image_tensor)
         self.output_detection = self.Detector.get_detector_output()
+        logging.info('ElementDetection inference completed.')
 
     def get_detection(self):
         """Returns an output_detection field of ElementDetection.

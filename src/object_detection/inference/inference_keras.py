@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 from absl import logging
 
-from src.object_detection.inference.Detector import Detector
+from src.object_detection.inference.Classifier import Classifier
 from src.utils.path_utils import check_path_existence
 from src.utils.perf_utils import timer_wrapper
 
@@ -53,7 +53,7 @@ def process_keras_classification(classifications, evenly_round_classification_sc
     return classifications
 
 
-class DetectorKerasClassification(Detector):
+class ClassifierKeras(Classifier):
     def __init__(self, model_path):
         self.model = None
         self.tensor_input = None
@@ -61,9 +61,9 @@ class DetectorKerasClassification(Detector):
         self.output_raw_classifications = False
 
         self.model_path = check_path_existence(model_path, self.__name__)
-        self.load_detector(self.model_path)
+        self.load_classifier(self.model_path)
 
-    def load_detector(self, detector_path):
+    def load_classifier(self, detector_path):
         self.model = load_inference_graph_keras(detector_path)
 
     def infer_tensor_input(self, tensor_input):
@@ -77,7 +77,7 @@ class DetectorKerasClassification(Detector):
         else:
             self.classifications = infer_keras_classification(tensor_input, self.model)
 
-    def get_detector_output(self):
+    def get_classifier_output(self):
         return self.classifications
 
     def visualize_output(self):
