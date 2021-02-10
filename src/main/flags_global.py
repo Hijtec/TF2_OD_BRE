@@ -18,15 +18,17 @@ flags.DEFINE_enum('job', 'running', ['running', 'stopped'], 'Job status.')
 #####
 # INPUT FEED FLAGS START
 # common
-flags.DEFINE_enum('image_input_mode', 'camera', ['camera', 'video', 'folder'], 'Source of image data.')
+flags.DEFINE_enum('image_input_mode', 'folder', ['camera', 'video', 'folder'], 'Source of image data.')
 flags.DEFINE_enum('location_input_mode', 'pos_constant', ['pos_constant', 'reserved'], 'Source of location data.')
 
 # image_feed_camera
 flags.DEFINE_integer('camera_device_used', 0, 'An index of the used camera device', lower_bound=0)
 # image_feed_camera
-flags.DEFINE_string('image_input_folder_path', None, 'PATH to the folder with images, images passed recursively.')
+flags.DEFINE_string('image_input_folder_path', r"C:\Users\cernil\Downloads\task_bre_anotation_mc-2021_02_03_11_53_00"
+                                               r"-pascal voc 1.1\JPEGImages", 'PATH to the folder with images, '
+                                                                              'images passed recursively.')
 # image_feed_video
-flags.DEFINE_string('image_input_folder_path', None, 'PATH to the folder with images, images passed recursively.')
+flags.DEFINE_string('image_input_video_path', None, 'PATH to the folder with images, images passed recursively.')
 # position_feed_constant
 flags.DEFINE_enum('robot_position', 'elevator', ['elevator', 'hall', 'reserved'], 'Current location of the robot.')
 
@@ -34,12 +36,14 @@ flags.DEFINE_enum('robot_position', 'elevator', ['elevator', 'hall', 'reserved']
 #####
 # ELEVATOR CONTROLS DETECTION FLAGS START
 # elevator element detection
-flags.DEFINE_string('detector_elements_model_path', None,
+flags.DEFINE_string('detector_elements_model_path', r"C:\Users\cernil\OneDrive - Y Soft Corporation "
+                                                    r"a.s\DeepLearningBlackbox\test\output\saved_model",
                     'PATH to a SavedModel file capable of detection of elevator elements.')
 flags.DEFINE_enum('detection_elements_model_type', 'tf2',
                   ['tf2', 'reserved'], 'Type of detection model used - RESERVED.')
 # floor button classification
-flags.DEFINE_string('classification_floor_button_model_path', None,
+flags.DEFINE_string('classification_floor_button_model_path', r"C:\Users\cernil\OneDrive - Y Soft Corporation "
+                                                              r"a.s\DeepLearningBlackbox\button_classifier",
                     'PATH to a SavedModel file capable of classification of elevator floor buttons.')
 flags.DEFINE_enum('classification_floor_button_model_type', 'keras',
                   ['keras', 'reserved'], 'Type of classification model used - RESERVED.')
