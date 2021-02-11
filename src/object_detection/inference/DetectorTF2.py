@@ -45,13 +45,15 @@ def process_tf2_detection(detections_batch, convert_classes_to_int=True):
         detections_batch: Dictionary of detections.
         convert_classes_to_int: Bool converting the classes to int64(float by default)
     Returns:
-        predictions: List of detections / class score.
+        detections: Dictionary of detections, processed.
     """
-    num_detections = int(detections_batch.peek('num_detections'))
+    # TODO: not used atm
+    num_detections = int(detections_batch.pop('num_detections'))
     logging.info(f"Processing {num_detections} TF2 detections.")
     detections = {k: v[0, :num_detections].numpy() for k, v in detections_batch.items()}
     if convert_classes_to_int:
         detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
+    return detections
 
 
 class DetectorTF2(Detector):
@@ -72,11 +74,7 @@ class DetectorTF2(Detector):
             raise ValueError("Detection TF2 SavedModel has not been loaded.")
 
         self.tensor_input = tensor_input
-        if self.output_raw_detections is False:
-            detections = infer_tf2_detection(tensor_input, self.model)
-            self.detections = process_tf2_detection(detections)
-        else:
-            self.detections = infer_tf2_detection(tensor_input, self.model)
+        self.detections = infer_tf2_detection(tensor_input, self.model)
 
     def get_detector_output(self):
         return self.detections
