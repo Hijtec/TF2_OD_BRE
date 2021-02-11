@@ -37,7 +37,7 @@ class FloorButtonClassification:
         :param image_tensor: tf.tensor of the same shape as input layer of the Detector neural network.
         """
         self.Classifier.infer_tensor_input(image_tensor)
-        self.output_classification = self.Classifier.get_detector_output()
+        self.output_classification = self.Classifier.get_classifier_output()
         logging.info('FloorButtonClassification inference completed.')
 
     def get_classification(self):

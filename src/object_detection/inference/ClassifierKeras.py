@@ -33,7 +33,7 @@ def infer_keras_classification(tensor_input, model_keras):
     Returns:
         classifications: List of classifications / class score.
     """
-    logging.info(f"Classifying using Keras model {model_keras.__name__}")
+    logging.info(f"Classifying using Keras model {model_keras.__class__.__name__}")
     classifications = model_keras.predict(tensor_input)
     return classifications
 
@@ -58,7 +58,6 @@ class ClassifierKeras(Classifier):
         self.model = None
         self.tensor_input = None
         self.classifications = None
-        self.output_raw_classifications = False
 
         self.model_path = check_path_existence(model_path, self.__class__.__name__)
         self.load_classifier(self.model_path)
@@ -71,11 +70,7 @@ class ClassifierKeras(Classifier):
             raise ValueError("Classification Keras SavedModel has not been loaded.")
 
         self.tensor_input = tensor_input
-        if self.output_raw_classifications is False:
-            classifications = infer_keras_classification(tensor_input, self.model)
-            self.classifications = process_keras_classification(classifications)
-        else:
-            self.classifications = infer_keras_classification(tensor_input, self.model)
+        self.classifications = infer_keras_classification(tensor_input, self.model)
 
     def get_classifier_output(self):
         return self.classifications
