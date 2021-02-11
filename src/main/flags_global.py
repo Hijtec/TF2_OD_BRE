@@ -24,9 +24,9 @@ flags.DEFINE_enum('location_input_mode', 'pos_constant', ['pos_constant', 'reser
 # image_feed_camera
 flags.DEFINE_integer('camera_device_used', 0, 'An index of the used camera device', lower_bound=0)
 # image_feed_camera
-flags.DEFINE_string('image_input_folder_path', r"C:\Users\cernil\Downloads\task_bre_anotation_mc-2021_02_03_11_53_00"
-                                               r"-pascal voc 1.1\JPEGImages", 'PATH to the folder with images, '
-                                                                              'images passed recursively.')
+flags.DEFINE_string('image_input_folder_path', r"C:\Users\cernil\OneDrive - Y Soft Corporation "
+                                               r"a.s\DeepLearningBlackbox\test\test_images_elevator_control_panel",
+                    'PATH to the folder with images, images passed recursively.')
 # image_feed_video
 flags.DEFINE_string('image_input_video_path', None, 'PATH to the folder with images, images passed recursively.')
 # position_feed_constant
@@ -41,6 +41,10 @@ flags.DEFINE_string('detector_elements_model_path', r"C:\Users\cernil\OneDrive -
                     'PATH to a SavedModel file capable of detection of elevator elements.')
 flags.DEFINE_enum('detection_elements_model_type', 'tf2',
                   ['tf2', 'reserved'], 'Type of detection model used - RESERVED.')
+flags.DEFINE_string('label_map_path_detection',
+                    r"C:\Users\cernil\OneDrive - Y Soft Corporation "
+                    r"a.s\DeepLearningBlackbox\test\output\pascal_label_map.pbtxt",
+                    'PATH to the label_map.txt | label_map.pbtxt file for detection.')
 # floor button classification
 flags.DEFINE_string('classification_floor_button_model_path', r"C:\Users\cernil\OneDrive - Y Soft Corporation "
                                                               r"a.s\DeepLearningBlackbox\button_classifier",
