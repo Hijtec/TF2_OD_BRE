@@ -1,6 +1,5 @@
 from src.main.RecognizeElevatorElements import RecognizeElevatorElements
 from absl import app
-from src.main.flags_global import FLAGS
 
 
 def main(*args):
