@@ -47,3 +47,16 @@ def non_max_suppress_detections(detections, max_output_size=100, iou_threshold=0
     return {'detection_boxes_nms': detection_boxes_nms,
             'detection_classes_nms': detection_classes_nms,
             'detection_scores_nms': detection_scores_nms}
+
+
+def map_predictions_to_output_label_and_sort(predictions, labels):
+    """Maps predictions to labels.
+    Eg.: predictions = [1e-3,   3e-2,   2e-3,   0.96,    2e-3]
+    Eg.: labels      = ['bike', 'dog',  'cat',  'fly',  'house']
+    returns ['fly', 'dog', 'house', 'cat', 'bike']
+    :param predictions: Ndarray of shape (1, x) with prediction scores
+    :param labels: Ndarray of shape (1, x)
+    :return: List of sorted labels by predictions
+    """
+    predictions_sorted, labels_sorted = zip(*sorted(zip(predictions, labels), reverse=True))
+    return predictions_sorted, labels_sorted
