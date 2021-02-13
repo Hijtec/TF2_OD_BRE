@@ -20,7 +20,9 @@ def load_inference_graph_keras(inference_graph_keras_dir):
     """
     logging.info(f"Loading Keras model from \n{inference_graph_keras_dir}")
     model_keras = tf.keras.models.load_model(inference_graph_keras_dir)
-    logging.info("Keras SavedModel load OK!")
+    latest_checkpoint = tf.train.latest_checkpoint(inference_graph_keras_dir)
+    model_keras.load_weights(latest_checkpoint)
+    logging.info("Keras SavedModel load OK! Weights loaded.")
     return model_keras
 
 
