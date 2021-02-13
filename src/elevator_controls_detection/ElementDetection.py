@@ -31,7 +31,7 @@ class ElementDetection:
         :param image_data: Numpy-like array with shape (width, height, n_channels)
         """
         image_tensor = tf.convert_to_tensor(np.expand_dims(image_data, 0), dtype=tf.uint8)
-        self.detect_next_tensor(image_tensor)
+        return self.detect_next_tensor(image_tensor)
 
     def detect_next_tensor(self, image_tensor):
         """Runs detection on the given image_tensor.
@@ -40,8 +40,9 @@ class ElementDetection:
         self.Detector.infer_tensor_input(image_tensor)
         self.output_detection = self.Detector.get_detector_output()
         logging.info('ElementDetection inference completed.')
+        return self.output_detection
 
-    def get_detection(self):
+    def get_detection_field(self):
         """Returns an output_detection field of ElementDetection.
         :return: Dictionary containing the detection output
         """

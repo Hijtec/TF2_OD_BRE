@@ -30,7 +30,7 @@ class FloorButtonClassification:
         :param image_data: Numpy-like array with shape (width, height, n_channels)
         """
         image_tensor = tf.convert_to_tensor(np.expand_dims(image_data, 0), dtype=tf.float32)
-        self.classify_next_tensor(image_tensor)
+        return self.classify_next_tensor(image_tensor)
 
     def classify_next_tensor(self, image_tensor):
         """Runs classification on the given image_tensor.
@@ -39,8 +39,9 @@ class FloorButtonClassification:
         self.Classifier.infer_tensor_input(image_tensor)
         self.output_classification = self.Classifier.get_classifier_output()
         logging.info('FloorButtonClassification inference completed.')
+        return self.output_classification
 
-    def get_classification(self):
+    def get_classification_field(self):
         """Returns an output_classification field of ElementDetection.
         :return: Dictionary containing the detection output
         """
