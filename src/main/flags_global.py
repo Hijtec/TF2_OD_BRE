@@ -15,6 +15,7 @@ flags.DEFINE_integer('age', None, 'Your age in years.', lower_bound=0)
 flags.DEFINE_boolean('debug', False, 'Produces debugging output.')
 flags.DEFINE_enum('job', 'running', ['running', 'stopped'], 'Job status.')
 """
+flags.DEFINE_string('f', '', 'kernel')  # workaround due to JupyterNotebook
 #####
 # INPUT FEED FLAGS START
 # common
@@ -28,7 +29,7 @@ flags.DEFINE_string('image_input_folder_path', r"C:\Users\cernil\OneDrive - Y So
                                                r"a.s\DeepLearningBlackbox\test\test_images_elevator_control_panel",
                     'PATH to the folder with images, images passed recursively.')
 # image_feed_video
-flags.DEFINE_string('image_input_video_path', None, 'PATH to the folder with images, images passed recursively.')
+flags.DEFINE_string('image_input_video_path', None, 'PATH to the folder with video, used while image_input_mode=video.')
 # position_feed_constant
 flags.DEFINE_enum('robot_position', 'elevator', ['elevator', 'hall', 'reserved'], 'Current location of the robot.')
 
