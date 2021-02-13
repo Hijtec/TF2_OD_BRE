@@ -4,6 +4,7 @@ TODO: Main class, describe what it does
 from src.elevator_controls_detection.ElementDetection import ElementDetection
 from src.elevator_controls_detection.FloorButtonClassification import FloorButtonClassification
 from src.input_feed.InputFeed import InputFeed
+from src.output_processing.OutputProcessing import OutputProcessing
 from src.main.flags_global import FLAGS
 from absl import logging
 
@@ -15,10 +16,11 @@ import numpy as np
 
 
 class RecognizeElevatorElements:
-    def __init__(self):
+    def __init__(self, label_map_path=FLAGS.label_map_path_detection):
         self.input = InputFeed()
         self.detection = ElementDetection()
         self.classification = FloorButtonClassification()
+        self.processing = OutputProcessing(label_map_path)
         self.postprocessing = None  # TODO: these parts are not yet implemented
         self.visualization = None  # TODO: these parts are not yet implemented
 
@@ -27,8 +29,7 @@ class RecognizeElevatorElements:
         if input_data is None:
             logging.warning('No InputData. Skipping.')
             return
-        self.detection.detect_next_image(input_data['ImageData'])
-        detection_data = self.detection.get_detection()
+        detection_data = self.detection.detect_next_image(input_data['ImageData'])
         detections_nms = non_max_suppress_detections(detection_data)
         category_index = create_category_index(FLAGS.label_map_path_detection)
         detection_buttons = filter_one_category_from_detections_nms(detections_nms, category_index, category='btn_floor')
@@ -40,8 +41,7 @@ class RecognizeElevatorElements:
             button_roi_tensor_resized = tf.image.resize_with_pad(button_roi_tensor, 224, 224, method=tf.image.ResizeMethod.BICUBIC)
             imshow(np.squeeze(button_roi_tensor_resized.numpy().astype(tf.int32)))
             show()
-            self.classification.classify_next_tensor(button_roi_tensor_resized)
-            button_classification = self.classification.get_classification()
+            button_classification = self.classification.classify_next_tensor(button_roi_tensor_resized)
             button_classifications.append(button_classification)
         return
 
