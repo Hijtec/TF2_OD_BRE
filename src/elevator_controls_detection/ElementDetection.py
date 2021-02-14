@@ -4,7 +4,7 @@ This module contains a Class capable of detecting elevator elements in an image.
 import tensorflow as tf
 import numpy as np
 from absl import logging
-
+from src.models.research.object_detection.utils import label_map_util
 from src.object_detection.inference import DetectorTF2
 from src.main.flags_global import FLAGS
 
