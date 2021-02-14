@@ -14,6 +14,10 @@ class Classifier(ABC):
         pass
 
     @abstractmethod
+    def infer_images(self, images, input_size):
+        pass
+
+    @abstractmethod
     def visualize_output(self):
         pass
 
