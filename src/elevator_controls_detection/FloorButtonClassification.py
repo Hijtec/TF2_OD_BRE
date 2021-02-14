@@ -10,9 +10,6 @@ from src.main.flags_global import FLAGS
 
 class FloorButtonClassification:
     def __init__(self):
-        self.input_image_button = None
-        self.input_tensor_button = None
-        self.output_classification = None
         self.Classifier = None
 
         self.__assign_classifier(FLAGS.classification_floor_button_model_path)
@@ -25,26 +22,19 @@ class FloorButtonClassification:
             # TODO: more types support
             raise ValueError('Other detectors not supported, use tf2 type.')
 
-    def classify_next_image(self, image_data):
+    def classify_next_images(self, image_data, input_size=(224, 224)):
         """Runs classification on the given image_data.
-        :param image_data: Numpy-like array with shape (width, height, n_channels)
+        :param input_size: Tuple with contents of (input_height, input_width)
+        :param image_data: List of image numpy array data
         """
-        image_tensor = tf.convert_to_tensor(np.expand_dims(image_data, 0), dtype=tf.float32)
-        return self.classify_next_tensor(image_tensor)
+        output = self.Classifier.infer_images(image_data, input_size)
+        logging.info('FloorButtonClassification inference completed.')
+        return output
 
     def classify_next_tensor(self, image_tensor):
         """Runs classification on the given image_tensor.
         :param image_tensor: tf.tensor of the same shape as input layer of the Detector neural network.
         """
-        self.Classifier.infer_tensor_input(image_tensor)
-        self.output_classification = self.Classifier.get_classifier_output()
+        classification = self.Classifier.infer_tensor_input(image_tensor)
         logging.info('FloorButtonClassification inference completed.')
-        return self.output_classification
-
-    def get_classification_field(self):
-        """Returns an output_classification field of ElementDetection.
-        :return: Dictionary containing the detection output
-        """
-        if self.output_classification is None:
-            raise ValueError('FloorButtonClassification output is None.')
-        return self.output_classification
+        return classification
