@@ -29,16 +29,25 @@ def create_category_index(label_map_path):
     return category_index
 
 
+def create_category_index_from_list(classname_list):
+    category_index = {}
+    index = 1
+    for classname in classname_list:
+        category_index[index] = {'id': index, 'name': str(classname)}
+        index += 1
+    return category_index
+
+
 def non_max_suppress_detections(detections, max_output_size=100, iou_threshold=0.5, score_threshold=0.3):
     detection_boxes = detections['detection_boxes'][0].numpy()
     detection_classes = detections['detection_classes'][0].numpy()
     detection_scores = detections['detection_scores'][0].numpy()
     indexes = np.array(tf.image.non_max_suppression(
-            detection_boxes,
-            detection_scores,
-            max_output_size,
-            iou_threshold,
-            score_threshold))
+        detection_boxes,
+        detection_scores,
+        max_output_size,
+        iou_threshold,
+        score_threshold))
 
     detection_boxes_nms = detection_boxes[indexes]
     detection_classes_nms = detection_classes[indexes]
