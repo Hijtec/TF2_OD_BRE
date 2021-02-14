@@ -36,23 +36,7 @@ def infer_keras_classification(tensor_input, model_keras):
         classifications: List of classifications / class score.
     """
     logging.info(f"Classifying using Keras model {model_keras.__class__.__name__}")
-    classifications = model_keras.predict(tensor_input)
-    return classifications
-
-
-@timer_wrapper
-def process_keras_classification(classifications, evenly_round_classification_scores=True):
-    """Processes the TF2 detections batch
-    Args:
-        classifications: List of classifications / class score.
-        evenly_round_classification_scores: Bool enabling the evenly rounded output of classification
-    Returns:
-        classifications: List of detections / class score.
-    """
-    logging.info(f"Processing Keras classification.")
-    if evenly_round_classification_scores:
-        classifications = np.around(classifications)
-    return classifications
+    return model_keras.predict(tensor_input)
 
 
 class ClassifierKeras(Classifier):
@@ -70,9 +54,31 @@ class ClassifierKeras(Classifier):
     def infer_tensor_input(self, tensor_input):
         if self.model is None:
             raise ValueError("Classification Keras SavedModel has not been loaded.")
+        return infer_keras_classification(tensor_input, self.model)
 
-        self.tensor_input = tensor_input
-        self.classifications = infer_keras_classification(tensor_input, self.model)
+    def infer_image(self, image, input_size):
+        """
+        Infers an image through KerasClassifier.
+        :param image: Numpy array containing input_image
+        :param input_size: Tuple with contents of (input_height, input_width)
+        :return: Dict of classification output
+        """
+        img_tensor = tf.convert_to_tensor(np.expand_dims(image, 0), dtype=tf.float32)
+        img_tensor_resized = tf.image.resize_with_pad(img_tensor, input_size[0], input_size[1], method=tf.image.ResizeMethod.BICUBIC)
+        return self.infer_tensor_input(img_tensor_resized)
+
+    def infer_images(self, images, input_size):
+        """
+        Infers images through KerasClassifier.
+        :param input_size: Tuple with contents of (input_height, input_width)
+        :param images: List of numpy arrays containing image data
+        :return: List of Dict of classification output
+        """
+        self.classifications = []
+        for img in images:
+            img_classification = self.infer_image(img, input_size)
+            self.classifications.append(img_classification)
+        return self.classifications
 
     def get_classifier_output(self):
         return self.classifications
