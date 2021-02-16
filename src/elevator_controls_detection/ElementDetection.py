@@ -35,11 +35,11 @@ class ElementDetection:
         logging.info('ElementDetection inference completed.')
         return detections
 
-    def detect_next_tensor(self, image_tensor):
+    def detect_next_tensor(self, image_tensor, input_shape=None):
         """Runs detection on the given image_tensor.
         :param image_tensor: tf.tensor of the same shape as input layer of the Detector neural network.
+        :param input_shape: Tuple with contents of (input_height, input_width)
         """
-        self.Detector.infer_tensor_input(image_tensor)
-        self.output_detection = self.Detector.get_detector_output()
+        detection = self.Detector.infer_tensor_input(image_tensor, input_shape)
         logging.info('ElementDetection inference completed.')
-        return self.output_detection
+        return detection
