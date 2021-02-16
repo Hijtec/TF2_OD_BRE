@@ -118,3 +118,6 @@ dmypy.json
 # PyCharm files
 .idea/
 .idea
+/env/Scripts/jupyter-console.exe
+/env/Scripts/jupyter-qtconsole.exe
+/env/etc/jupyter/nbconfig/notebook.d/widgetsnbextension.json
