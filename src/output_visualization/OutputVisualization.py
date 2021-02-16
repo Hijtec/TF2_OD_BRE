@@ -5,15 +5,18 @@ from src.utils.visualization_utils import save_image_array_as_png, draw_bounding
 
 
 class OutputVisualization:
-    def save_as_png(self, np_image, output_path):
+    @staticmethod
+    def save_as_png(np_image, output_path):
         """Save a numpy array as PNG image."""
         save_image_array_as_png(np_image, output_path)
 
-    def draw_bndboxes_on_image(self, np_image, bndboxes, color='red', thickness=4, label_lists=tuple()):
+    @staticmethod
+    def draw_bndboxes_on_image(np_image, bndboxes, color='red', thickness=4, label_lists=tuple()):
         """Draws bounding boxes upon image with provided color, thickness and labels."""
         draw_bounding_boxes_on_image_array(np_image, bndboxes, color, thickness, label_lists)
 
-    def visualize_on_image(self, np_image, bndboxes, classes, scores=None, category_index=None,
+    @staticmethod
+    def visualize_on_image(np_image, bndboxes, classes, scores=None, category_index=None,
                            use_normalized_coordinates=False, max_boxes_to_draw=25, min_score_thresh=0.25,
                            agnostic_mode=False, line_thickness=1, groundtruth_box_visualization_color='black',
                            skip_boxes=False, skip_scores=False, skip_labels=False):
@@ -28,7 +31,8 @@ class OutputVisualization:
                                                   min_score_thresh=min_score_thresh,
                                                   agnostic_mode=agnostic_mode,
                                                   line_thickness=line_thickness,
-                                                  groundtruth_box_visualization_color=groundtruth_box_visualization_color,
                                                   skip_boxes=skip_boxes,
+                                                  groundtruth_box_visualization_color
+                                                  =groundtruth_box_visualization_color,
                                                   skip_scores=skip_scores,
                                                   skip_labels=skip_labels)
