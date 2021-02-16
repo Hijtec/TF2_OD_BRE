@@ -1,18 +1,17 @@
 """A class wrapping the whole project.
 TODO: Main class, describe what it does
 """
+import numpy as np
+from absl import logging
+
 from src.elevator_controls_detection.ElementDetection import ElementDetection
 from src.elevator_controls_detection.FloorButtonClassification import FloorButtonClassification
 from src.input_feed.InputFeed import InputFeed
+from src.main.flags_global import FLAGS
 from src.output_processing.OutputProcessing import OutputProcessing
 from src.output_visualization.OutputVisualization import OutputVisualization
-from src.main.flags_global import FLAGS
-from absl import logging
-
 from src.utils.detection_utils import create_category_index_from_list
 from src.utils.image_utils import crop_multiple_images_by_bndbox
-
-import numpy as np
 
 
 class RecognizeElevatorElements:
@@ -42,7 +41,7 @@ class RecognizeElevatorElements:
                                                                   detections_nms,
                                                                   category_index_detection)
 
-        detection_buttons = self.processing.filter_one_category(detections_nms, 'btn_floor')
+        detection_buttons = self.processing.reduce_to_one_category(detections_nms, 'btn_floor')
         detection_buttons_roi = crop_multiple_images_by_bndbox(input_data['ImageData'],
                                                                detection_buttons['detection_boxes_nms'])
         button_classifications = self.classification.classify_next_images(detection_buttons_roi, input_size=(224, 224))
