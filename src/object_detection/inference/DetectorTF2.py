@@ -10,75 +10,64 @@ from src.utils.path_utils import check_path_existence
 from src.utils.perf_utils import timer_wrapper
 
 
-@timer_wrapper
-def load_inference_graph_tf2(inference_graph_tf2_dir):
-    """Loads the inference graph.
-    Args:
-        inference_graph_tf2_dir: Path to the TF2 inference graph with embedded weights.
-    Returns:
-        model_tf2: Loaded model used for inference.
-    """
-    logging.info(f"Loading TF2 model from \n{inference_graph_tf2_dir}")
-    model_tf2 = tf.saved_model.load(inference_graph_tf2_dir)
-    logging.info("TF2 SavedModel load OK!")
-    return model_tf2
-
-
-@timer_wrapper
-def infer_tf2_detection(tensor_input, model_tf2):
-    """Infers the tensor_input through TF2 model.
-    Args:
-        tensor_input: Tensor corresponding to the model input.
-        model_tf2: SavedModel of TensorFlow2 type.
-    Returns:
-        detections_batch: Dictionary of detections.
-    """
-    logging.info(f"Detecting using TF2 model {str(model_tf2)}")
-    detections_batch = model_tf2(tensor_input)
-    return detections_batch
-
-
-@timer_wrapper
-def process_tf2_detection(detections_batch, convert_classes_to_int=True):
-    """Processes the TF2 detections batch
-    Args:
-        detections_batch: Dictionary of detections.
-        convert_classes_to_int: Bool converting the classes to int64(float by default)
-    Returns:
-        detections: Dictionary of detections, processed.
-    """
-    # TODO: not used atm
-    num_detections = int(detections_batch.pop('num_detections'))
-    logging.info(f"Processing {num_detections} TF2 detections.")
-    detections = {k: v[0, :num_detections].numpy() for k, v in detections_batch.items()}
-    if convert_classes_to_int:
-        detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
-    return detections
-
-
 class DetectorTF2(Detector):
     def __init__(self, model_path):
         self.model = None
-        self.tensor_input = None
-        self.detections = None
-        self.output_raw_detections = False
 
         self.model_path = check_path_existence(model_path, self.__class__.__name__)
         self.load_detector(self.model_path)
 
-    def load_detector(self, detector_path):
-        self.model = load_inference_graph_tf2(detector_path)
+    @timer_wrapper
+    def load_detector(self, inference_graph_tf2_dir):
+        """
+        :param inference_graph_tf2_dir: PATH to directory containing SavedModel and its weights.
+        :return: Loaded TF2 SavedModel used for inference.
+        """
+        logging.info(f"Loading TF2 model from \n{inference_graph_tf2_dir}")
+        model_tf2 = tf.saved_model.load(inference_graph_tf2_dir)
+        logging.info("TF2 SavedModel load OK!")
+        self.model = model_tf2
 
+    @timer_wrapper
     def infer_tensor_input(self, tensor_input):
+        """
+        Infers a tensor through TF2 model.
+        :param tensor_input: tf.Tensor input to neural network
+        :return: dictionary of detections
+        """
         if self.model is None:
             raise ValueError("Detection TF2 SavedModel has not been loaded.")
+        logging.info(f"Detecting using TF2 model {self.model.__class__.__name__}")
+        detection = self.model(tensor_input)
+        return detection
 
-        self.tensor_input = tensor_input
-        self.detections = infer_tf2_detection(tensor_input, self.model)
+    def infer_image(self, image, input_size):
+        """
+        Infers an image through DetectorTF2r.
+        :param image: Numpy array containing input_image
+        :param input_size: Tuple with contents of (input_height, input_width). If None, resizing skipped.
+        :return: Dict of detection output
+        """
+        img_tensor = tf.convert_to_tensor(np.expand_dims(image, 0), dtype=tf.uint8)
+        if input_size is not None:
+            img_tensor = tf.image.resize_with_pad(img_tensor,
+                                                  input_size[0],
+                                                  input_size[1],
+                                                  method=tf.image.ResizeMethod.BICUBIC)
+        detection = self.infer_tensor_input(img_tensor)
+        return detection
 
-    def get_detector_output(self):
-        return self.detections
-
-    def visualize_output(self):
-        pass
-        # TODO: visualization library
+    @timer_wrapper
+    def infer_images(self, images, input_size=None):
+        """
+        Infers images through DetectorTF2.
+        :param input_size: Tuple with contents of (input_height, input_width).
+        If None, no resizing with padding will be done.
+        :param images: List of numpy arrays containing image data
+        :return: List of Dict of classification output
+        """
+        detections = []
+        for img in images:
+            img_detection = self.infer_image(img, input_size)
+            detections.append(img_detection)
+        return detections
