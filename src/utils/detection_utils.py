@@ -4,10 +4,16 @@ import numpy as np
 from src.models.research.object_detection.utils.label_map_util import load_labelmap, convert_label_map_to_categories
 
 
-def filter_one_category_from_detections_nms(detections_nms, category_index, category):
+def get_one_category_from_detections_nms(detections_nms, category_index, category):
+    """Gets one category from detections.
+    :param detections_nms: dictionary of outputs from detection, preferably already filtered by NMS
+    :param category_index: dictionary of standardized category_index type mapping ids to class_name
+    :param category: string - class_name to get all occurences of
+    :return:
+    """
     ids_to_find = np.array([])
-    indexes_to_grab = np.array([])
-    detections_nms_filtered = {}
+    indexes_to_get = np.array([])
+    detections_nms_one_category = {}
     for index_dict in category_index:
         if index_dict['name'] == category:
             if index_dict['id'] not in ids_to_find:
@@ -15,14 +21,18 @@ def filter_one_category_from_detections_nms(detections_nms, category_index, cate
     i = 0
     for detected_class_id in detections_nms['detection_classes_nms']:
         if int(detected_class_id) in ids_to_find:
-            indexes_to_grab = np.append(indexes_to_grab, i)
+            indexes_to_get = np.append(indexes_to_get, i)
         i += 1
     for key, np_array_data in detections_nms.items():
-        detections_nms_filtered[key] = np_array_data[indexes_to_grab.astype('uint8')]
-    return detections_nms_filtered
+        detections_nms_one_category[key] = np_array_data[indexes_to_get.astype('uint8')]
+    return detections_nms_one_category
 
 
 def create_category_index(label_map_path):
+    """
+    :param label_map_path: PATH to "label_map".txt|.pbtxt file
+    :return: dictionary of standardized category_index type
+    """
     label_map = load_labelmap(label_map_path)
     max_num_classes = max(item.id for item in label_map.item)
     category_index = convert_label_map_to_categories(label_map, max_num_classes, True)
@@ -30,6 +40,10 @@ def create_category_index(label_map_path):
 
 
 def create_category_index_from_list(classname_list):
+    """
+    :param classname_list: list of string entries - labels
+    :return: dictionary of standardized category_index type
+    """
     category_index = {}
     index = 1
     for classname in classname_list:
@@ -39,6 +53,7 @@ def create_category_index_from_list(classname_list):
 
 
 def non_max_suppress_detections(detections, max_output_size=100, iou_threshold=0.5, score_threshold=0.3):
+    """Filters detections by Non-Max Suppression"""
     detection_boxes = detections['detection_boxes'][0].numpy()
     detection_classes = detections['detection_classes'][0].numpy()
     detection_scores = detections['detection_scores'][0].numpy()
