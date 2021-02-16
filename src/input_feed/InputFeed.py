@@ -13,12 +13,15 @@ class InputFeed:
         self.data_sources_assigned = False
 
         self.Data = {'ImageData': [], 'LocationData': None}
-        self.DataSources = {'ImageSource': ImageFeed.ImageFeedEmpty(), 'LocationSource': LocationFeed.LocationFeedEmpty()}
+        self.DataSources = {'ImageSource': ImageFeed.ImageFeedEmpty(),
+                            'LocationSource': LocationFeed.LocationFeedEmpty()}
         self.__assign_sources()
 
+    # noinspection PyTypeChecker
     def __assign_sources(self):
         # Assigning Image Sources
         if FLAGS.image_input_mode == 'camera':
+            # noinspection PyTypeChecker
             self.DataSources['ImageSource'] = camera_feed.CameraFeedAsync()
         elif FLAGS.image_input_mode == 'video':
             self.DataSources['ImageSource'] = video_feed.VideoFeedAsync()
