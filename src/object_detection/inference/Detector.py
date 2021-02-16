@@ -14,9 +14,5 @@ class Detector(ABC):
         pass
 
     @abstractmethod
-    def visualize_output(self):
-        pass
-
-    @abstractmethod
-    def get_detector_output(self):
+    def infer_images(self, images, input_size=None):
         pass
