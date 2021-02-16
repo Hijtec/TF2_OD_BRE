@@ -3,6 +3,7 @@ from absl import logging
 
 
 def timer_wrapper(method):
+    """Times the entry and exit from a function an logs it using absl.logging.info in milliseconds."""
     def timed(*args, **kwargs):
         time_entry = time.time()
         result = method(*args, **kwargs)

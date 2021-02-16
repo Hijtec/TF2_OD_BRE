@@ -36,6 +36,7 @@ def convert_annotation_path_to_image_path(annotation_path, image_dir_path, img_s
 
 
 def path_exists(input_path):
+    """Returns True if PATH exists, otherwise returns False."""
     if path.exists(input_path):
         return True
     else:
@@ -43,10 +44,12 @@ def path_exists(input_path):
 
 
 def check_path_existence(input_path, object_name):
+    """Raises ValueError if PATH does not exist."""
     if path_exists(input_path) is False:
         raise ValueError(f"Path used in method: {object_name} does not exist.")
     return input_path
 
 
 def force_separator_as_path_end(input_path):
+    """Appends an os.sep at the end of the PATH if there is none."""
     return input_path if input_path[-1] == sep else input_path + sep
