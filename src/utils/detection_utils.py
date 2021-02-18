@@ -39,13 +39,14 @@ def create_category_index(label_map_path):
     return category_index
 
 
-def create_category_index_from_list(classname_list):
+def create_category_index_from_list(classname_list, label_offset=0):
     """
     :param classname_list: list of string entries - labels
+    :param label_offset: int offsetting the labels by x
     :return: dictionary of standardized category_index type
     """
     category_index = {}
-    index = 1
+    index = 0 + label_offset
     for classname in classname_list:
         category_index[index] = {'id': index, 'name': str(classname)}
         index += 1
