@@ -1,7 +1,7 @@
 """A helper class providing methods for processing object detection and classification outputs.
 """
-from src.utils.visualization_utils import save_image_array_as_png, draw_bounding_boxes_on_image_array, \
-    visualize_boxes_and_labels_on_image_array
+from src.models.research.object_detection.utils.visualization_utils import save_image_array_as_png, \
+    draw_bounding_boxes_on_image_array, visualize_boxes_and_labels_on_image_array
 
 
 class OutputVisualization:
@@ -36,3 +36,30 @@ class OutputVisualization:
                                                   =groundtruth_box_visualization_color,
                                                   skip_scores=skip_scores,
                                                   skip_labels=skip_labels)
+
+    def visualize_element_detections(self, image, detections_nms, category_index_detection):
+        image_with_detections = image.copy()
+        self.visualize_on_image(image_with_detections,
+                                detections_nms['detection_boxes_nms'],
+                                detections_nms['detection_classes_nms'].astype(int).tolist(),
+                                detections_nms['detection_scores_nms'],
+                                category_index_detection,
+                                use_normalized_coordinates=True,
+                                line_thickness=1,
+                                max_boxes_to_draw=50,
+                                min_score_thresh=.20,
+                                agnostic_mode=False)
+        return image_with_detections
+
+    def visualize_button_classifications(self, image, classifications, category_index_classification):
+        image_with_button_classification = image.copy()
+        self.visualize_on_image(image_with_button_classification,
+                                classifications['detection_boxes'],
+                                classifications['classification_classes'],
+                                classifications['classification_scores'],
+                                category_index_classification,
+                                use_normalized_coordinates=True,
+                                max_boxes_to_draw=25,
+                                min_score_thresh=.10,
+                                agnostic_mode=False)
+        return image_with_button_classification
