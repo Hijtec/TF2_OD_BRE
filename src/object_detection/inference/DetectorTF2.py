@@ -67,7 +67,10 @@ class DetectorTF2(Detector):
         :return: List of Dict of classification output
         """
         detections = []
-        for img in images:
-            img_detection = self.infer_image(img, input_size)
-            detections.append(img_detection)
+        if images is not list:
+            detections = self.infer_image(images, input_size)
+        else:
+            for img in images:
+                img_detection = self.infer_image(img, input_size)
+                detections.append(img_detection)
         return detections
