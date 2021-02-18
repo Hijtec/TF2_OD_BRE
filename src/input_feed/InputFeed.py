@@ -21,7 +21,6 @@ class InputFeed:
     def __assign_sources(self):
         # Assigning Image Sources
         if FLAGS.image_input_mode == 'camera':
-            # noinspection PyTypeChecker
             self.DataSources['ImageSource'] = camera_feed.CameraFeedAsync()
         elif FLAGS.image_input_mode == 'video':
             self.DataSources['ImageSource'] = video_feed.VideoFeedAsync()
