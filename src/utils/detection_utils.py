@@ -8,16 +8,16 @@ def get_one_category_from_detections_nms(detections_nms, category_index, categor
     """Gets one category from detections.
     :param detections_nms: dictionary of outputs from detection, preferably already filtered by NMS
     :param category_index: dictionary of standardized category_index type mapping ids to class_name
-    :param category: string - class_name to get all occurences of
+    :param category: string - class_name to get all occurrences of
     :return:
     """
     ids_to_find = np.array([])
     indexes_to_get = np.array([])
     detections_nms_one_category = {}
-    for index_dict in category_index:
-        if index_dict['name'] == category:
-            if index_dict['id'] not in ids_to_find:
-                ids_to_find = np.append(ids_to_find, index_dict['id'])
+    for key, value in category_index.items():
+        if value['name'] == category:
+            if value['id'] not in ids_to_find:
+                ids_to_find = np.append(ids_to_find, value['id'])
     i = 0
     for detected_class_id in detections_nms['detection_classes_nms']:
         if int(detected_class_id) in ids_to_find:
