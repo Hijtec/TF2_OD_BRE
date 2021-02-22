@@ -11,9 +11,9 @@ from src.main.flags_global import FLAGS
 
 
 class FolderFeedSync(ImageFeed):
-    def __init__(self):
+    def __init__(self, folder_dir_path=FLAGS.image_input_folder_path):
         self.cap = None
-        self.image_dir_path = force_separator_as_path_end(FLAGS.image_input_folder_path)
+        self.image_dir_path = force_separator_as_path_end(folder_dir_path)
         self.check = False
         self.frame = []
 
