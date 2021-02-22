@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+import cv2
 
 
 def convert_image_to_np_array(image):
@@ -70,3 +71,49 @@ def crop_multiple_images_by_bndbox(image, bndboxes):
             continue
         crops.append(cropped_image)
     return crops
+
+
+def grayscale_image(image):
+    """Grayscales an image."""
+    return cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+
+def gaussian_blur_image(image, kernel_size=(5, 5), std_distribution=1.0):
+    """Blurs an image with the gaussian filter."""
+    return cv2.GaussianBlur(image, kernel_size, std_distribution)
+
+
+def median_blur_image(image, kernel_size=5):
+    """Blurs an image with the median filter."""
+    return cv2.medianBlur(image, kernel_size)
+
+
+def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, intensity=1.0, threshold=0):
+    """Produce a sharpened version of the image, using an unsharp mask.
+    :param image: ndarray of shape (width, height, channels)
+    :param kernel_size: tuple with the size of kernel of shape (x, y)
+    :param sigma: float standard distribution used in gaussian blur
+    :param intensity: float representing the intensity of sharpening
+    :param threshold: float threshold value for low contrast mask. If 0, low contrast mask not used
+    :return: ndarray of same shape as param image but sharpened
+    """
+    blurred = gaussian_blur_image(image.copy(), kernel_size, std_distribution=sigma)
+    sharpened = float(intensity + 1) * image - float(intensity) * blurred
+    sharpened = np.maximum(sharpened, np.zeros(sharpened.shape))
+    sharpened = np.minimum(sharpened, 255 * np.ones(sharpened.shape))
+    sharpened = sharpened.round().astype(np.uint8)
+    if threshold > 0:
+        low_contrast_mask = np.absolute(image - blurred) < threshold
+        np.copyto(sharpened, image, where=low_contrast_mask)
+    return sharpened
+
+
+def auto_canny(image, sigma=0.33):
+    """Produce an edges image version of the image"""
+    v = np.median(image)  # compute the median of the single channel pixel intensities
+    lower = int(max(0, (1.0 - sigma) * v))
+    upper = int(min(255, (1.0 + sigma) * v))
+    edged = cv2.Canny(image, lower, upper)  # apply automatic Canny edge detection using the computed median
+    return edged
+
+
