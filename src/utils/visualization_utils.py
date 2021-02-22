@@ -16,3 +16,4 @@ def show_multiple_images_side_by_side(*images):
     resulting_image = []
     for img in images:
         np.vstack(resulting_image, img)
+    __show_plt_window(resulting_image)
