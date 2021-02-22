@@ -8,6 +8,7 @@ from src.utils.detection_utils import create_category_index, get_one_category_fr
 from src.utils.image_utils import crop_multiple_images_by_bndbox
 from src.utils.path_utils import check_path_existence
 from src.utils.detection_utils import create_category_index_from_list
+from src.utils.processing_utils import find_button_action_area_by_hough_circles_nms
 
 
 class OutputProcessing:
@@ -53,7 +54,7 @@ class OutputProcessing:
         return create_category_index_from_list(label_list)
 
     @staticmethod
-    def filter_by_nms(detections, max_output_size=100, iou_threshold=0.5, score_threshold=0.3):
+    def filter_by_nms(detections, max_output_size=100, iou_threshold=0.5, score_threshold=0.4):
         """Filters the detection output by utilizing Non-Maximum Suppression."""
         logging.info('Non-maximum suppression used on detections.')
         return non_max_suppress_detections(detections, max_output_size, iou_threshold, score_threshold)
@@ -63,3 +64,35 @@ class OutputProcessing:
         """Retrieves a list of sorted labels by predictions."""
         logging.info('Retrieved list of most probable labels.')
         return map_predictions_to_output_label_and_sort(predictions, labels)
+
+    @staticmethod
+    def find_buttons_action_areas(button_images, button_bndboxes, input_image, output_relative_coords=False):
+        """Finds a bounding box of action area of the button."""
+        logging.info('Finding buttons action areas.')
+        action_area_bndboxes = []
+        button_bndboxes_absolute = []
+
+        for entry in button_bndboxes:
+            bndbox_absolute = [entry[0] * input_image.shape[0],
+                               entry[1] * input_image.shape[1],
+                               entry[2] * input_image.shape[0],
+                               entry[3] * input_image.shape[1]]
+            button_bndboxes_absolute.append(bndbox_absolute)
+
+        for button_image, button_bndbox in zip(button_images, button_bndboxes_absolute):
+            action_area_bndboxes.append(find_button_action_area_by_hough_circles_nms(button_image, button_bndbox))
+
+        if output_relative_coords is True:
+            button_action_areas_relative = []
+            for button in action_area_bndboxes:
+                for entry in button:
+                    bndbox_relative = [entry[0] / input_image.shape[0],
+                                       entry[1] / input_image.shape[1],
+                                       entry[2] / input_image.shape[0],
+                                       entry[3] / input_image.shape[1]]
+                    button_action_areas_relative.append(bndbox_relative)
+            button_action_areas_relative = np.array(button_action_areas_relative)
+            return button_action_areas_relative
+
+        action_area_bndboxes = np.array(action_area_bndboxes)
+        return action_area_bndboxes
