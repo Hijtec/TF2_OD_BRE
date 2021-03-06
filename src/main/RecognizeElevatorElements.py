@@ -1,6 +1,7 @@
 """A class wrapping the whole project.
 TODO: Main class, describe what it does
 """
+import os
 from absl import logging
 
 from src.elevator_controls_detection.ElementDetection import ElementDetection
@@ -53,32 +54,38 @@ class RecognizeElevatorElements:
         if detection_buttons_roi is not None:
             button_classifications = self.classification.classify_next_images(detection_buttons_roi,
                                                                               input_size=(224, 224))
-            button_labels = [-2, -1, 0, 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 3, 4, 5, 6, 7, 8, 9]
+            button_labels = [-1, -2, 0, 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 3, 4, 5, 6, 7, 8, 9]
             category_index_classification = self.output_processing.create_category_index_from_list(button_labels)
             btn_highest_classes, btn_highest_scores = self.output_processing.filter_highest_classifications(
                 button_classifications)
             classifications = {'detection_boxes': detection_buttons['detection_boxes_nms'],
                                'classification_classes': btn_highest_classes,
                                'classification_scores': btn_highest_scores}
-            image_with_classification = self.visualization.visualize_button_classifications(input_data['ImageData'],
-                                                                                            classifications,
-                                                                                            category_index_classification)
+
+            image_with_action_areas = input_data['ImageData'].copy()
             action_area_bndboxes = self.output_processing.find_buttons_action_areas(detection_buttons_roi,
                                                                                     detection_buttons[
                                                                                           'detection_boxes_nms'],
                                                                                     input_data['ImageData'],
                                                                                     output_relative_coords=True)
-            self.visualization.draw_bndboxes_on_image(image_with_classification,
+            self.visualization.draw_ellipses_on_image_from_bndboxes(image_with_action_areas,
+                                                                    action_area_bndboxes,
+                                                                    use_normalized_coords=True)
+            self.visualization.draw_bndboxes_on_image(image_with_action_areas,
                                                       action_area_bndboxes,
                                                       thickness=2)
+            image_with_classification = self.visualization.visualize_button_classifications(image_with_action_areas,
+                                                                                            classifications,
+                                                                                            category_index_classification)
 
-        PATH_OUTPUT_TEST = r"C:\Users\cernil\Documents\test_floor_classification_output\t_"
+        PATH_OUTPUT_TEST_DETECTION = r"C:\Users\cernil\OneDrive - Y Soft Corporation a.s\betapresentation_visualisation\outputs\detection"
+        PATH_OUTPUT_TEST_CLASSIFICATION = r"C:\Users\cernil\OneDrive - Y Soft Corporation a.s\betapresentation_visualisation\outputs\classification"
         self.visualization.save_as_png(image_with_detections,
-                                       PATH_OUTPUT_TEST + f"{self.visualization_index}detection.png")
+                                       PATH_OUTPUT_TEST_DETECTION + os.sep + f"{self.visualization_index}detection.png")
         if detection_buttons_roi is None:
             image_with_classification = input_data['ImageData']
         self.visualization.save_as_png(image_with_classification,
-                                       PATH_OUTPUT_TEST + f"{self.visualization_index}classification.png")
+                                       PATH_OUTPUT_TEST_CLASSIFICATION + os.sep + f"{self.visualization_index}classification.png")
         self.visualization_index += 1
         return
 

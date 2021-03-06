@@ -2,6 +2,7 @@
 """
 from src.models.research.object_detection.utils.visualization_utils import save_image_array_as_png, \
     draw_bounding_boxes_on_image_array, visualize_boxes_and_labels_on_image_array
+from src.utils.visualization_utils import draw_ellipses_in_bndboxes_on_image_array
 
 
 class OutputVisualization:
@@ -14,6 +15,11 @@ class OutputVisualization:
     def draw_bndboxes_on_image(np_image, bndboxes, color='red', thickness=4, label_lists=tuple()):
         """Draws bounding boxes upon image with provided color, thickness and labels."""
         draw_bounding_boxes_on_image_array(np_image, bndboxes, color, thickness, label_lists)
+
+    @staticmethod
+    def draw_ellipses_on_image_from_bndboxes(np_image, bndboxes, color='red', thickness=3, use_normalized_coords=True):
+        """Draws ellipses from boxes upon image with provided color and thickness."""
+        draw_ellipses_in_bndboxes_on_image_array(np_image, bndboxes, color, thickness, use_normalized_coords)
 
     @staticmethod
     def visualize_on_image(np_image, bndboxes, classes, scores=None, category_index=None,
