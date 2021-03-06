@@ -19,7 +19,7 @@ flags.DEFINE_string('f', '', 'kernel')  # workaround due to JupyterNotebook
 #####
 # INPUT FEED FLAGS START
 # common
-flags.DEFINE_enum('image_input_mode', 'folder', ['camera', 'video', 'folder'], 'Source of image data.')
+flags.DEFINE_enum('image_input_mode', 'video', ['camera', 'video', 'folder'], 'Source of image data.')
 flags.DEFINE_enum('location_input_mode', 'pos_constant', ['pos_constant', 'reserved'], 'Source of location data.')
 
 # image_feed_camera
@@ -29,7 +29,7 @@ flags.DEFINE_string('image_input_folder_path', r"C:\Users\cernil\OneDrive - Y So
                                                r"a.s\DeepLearningBlackbox\test\test_images_elevator_control_panel",
                     'PATH to the folder with images, images passed recursively.')
 # image_feed_video
-flags.DEFINE_string('image_input_video_path', None, 'PATH to the folder with video, used while image_input_mode=video.')
+flags.DEFINE_string('image_input_video_path', r"C:\Users\cernil\OneDrive - Y Soft Corporation a.s\betapresentation_visualisation\input_video\test_movie.MOV", 'PATH to the folder with video, used while image_input_mode=video.')
 # position_feed_constant
 flags.DEFINE_enum('robot_position', 'elevator', ['elevator', 'hall', 'reserved'], 'Current location of the robot.')
 
