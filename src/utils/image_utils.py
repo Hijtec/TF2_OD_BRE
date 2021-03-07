@@ -3,7 +3,7 @@ from PIL import Image
 import cv2
 
 
-def convert_image_to_np_array(image):
+def convert_pil_to_np_array(image):
     """
     :param image: Pillow Image object
     :return: ndarray representation of input image
@@ -11,7 +11,7 @@ def convert_image_to_np_array(image):
     return np.asarray(image)
 
 
-def convert_np_array_to_image(np_array):
+def convert_np_array_to_pil(np_array):
     """
     :param np_array: ndarray of shape (height, width, channels)
     :return: Pillow Image object
@@ -33,11 +33,11 @@ def crop_to_area_above_threshold(img_np_to_crop, threshold=0):
     # Bounding box of non-threshold pixels.
     x0, y0 = coords.min(axis=0)
     x1, y1 = coords.max(axis=0) + 1  # slices are exclusive at the top
-    img_np_cropped = crop_image_by_bndbox(img_np_to_crop, [x0, y0, x1, y1], normalized_coordinates=False)
+    img_np_cropped = crop_by_bndbox(img_np_to_crop, [x0, y0, x1, y1], normalized_coordinates=False)
     return img_np_cropped
 
 
-def crop_image_by_bndbox(image, bndbox, normalized_coordinates=True):
+def crop_by_bndbox(image, bndbox, normalized_coordinates=True):
     """
     :param image: ndarray representing an image to be cropped of shape (width, height, channels)
     :param bndbox: list/tuple of [y0, x0, y1, x1] bounding box coordinates
@@ -57,7 +57,7 @@ def crop_image_by_bndbox(image, bndbox, normalized_coordinates=True):
     return cropped_img
 
 
-def crop_multiple_images_by_bndbox(image, bndboxes):
+def crop_multiple_by_bndbox(image, bndboxes):
     """
     :param image: ndarray representing an image to be cropped from
     :param bndboxes: list of lists/tuples of [y0, x0, y1, x1] bounding box coordinates
@@ -65,7 +65,7 @@ def crop_multiple_images_by_bndbox(image, bndboxes):
     """
     crops = None
     for bndbox in bndboxes:
-        cropped_image = crop_image_by_bndbox(image, bndbox)
+        cropped_image = crop_by_bndbox(image, bndbox)
         if crops is None:
             crops = [cropped_image]
             continue
@@ -73,17 +73,22 @@ def crop_multiple_images_by_bndbox(image, bndboxes):
     return crops
 
 
-def grayscale_image(image):
+def grayscale(image):
     """Grayscales an image."""
     return cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
 
-def gaussian_blur_image(image, kernel_size=(5, 5), std_distribution=1.0):
+def grayscale_to_colour(image):
+    """Converts grayscale image to equivalent color one."""
+    return cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+
+
+def gaussian_blur(image, kernel_size=(5, 5), std_distribution=1.0):
     """Blurs an image with the gaussian filter."""
     return cv2.GaussianBlur(image, kernel_size, std_distribution)
 
 
-def median_blur_image(image, kernel_size=5):
+def median_blur(image, kernel_size=5):
     """Blurs an image with the median filter."""
     return cv2.medianBlur(image, kernel_size)
 
@@ -97,7 +102,7 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, intensity=1.0, threshold=
     :param threshold: float threshold value for low contrast mask. If 0, low contrast mask not used
     :return: ndarray of same shape as param image but sharpened
     """
-    blurred = gaussian_blur_image(image.copy(), kernel_size, std_distribution=sigma)
+    blurred = gaussian_blur(image.copy(), kernel_size, std_distribution=sigma)
     sharpened = float(intensity + 1) * image - float(intensity) * blurred
     sharpened = np.maximum(sharpened, np.zeros(sharpened.shape))
     sharpened = np.minimum(sharpened, 255 * np.ones(sharpened.shape))
@@ -115,5 +120,25 @@ def auto_canny(image, sigma=0.33):
     upper = int(min(255, (1.0 + sigma) * v))
     edged = cv2.Canny(image, lower, upper)  # apply automatic Canny edge detection using the computed median
     return edged
+
+
+def enhance_edges(img, kernel_intensity=17):
+    blur = cv2.bilateralFilter(img, 5, 75, 75)
+    ki = kernel_intensity
+    kernel_sharp = np.array((
+         [-2, -2, -2],
+         [-2, ki, -2],
+         [-2, -2, -2]), dtype='int')
+    im = cv2.filter2D(blur, -1, kernel_sharp)
+    return im
+
+
+def equalize(img):
+    ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
+    channels = cv2.split(ycrcb)
+    cv2.equalizeHist(channels[0], channels[0])
+    cv2.merge(channels, ycrcb)
+    cv2.cvtColor(ycrcb, cv2.COLOR_YCR_CB2BGR, img)
+    return img
 
 

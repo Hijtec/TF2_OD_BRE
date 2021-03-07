@@ -5,7 +5,7 @@ import numpy as np
 
 from src.utils.detection_utils import create_category_index, get_one_category_from_detections_nms, \
     non_max_suppress_detections, map_predictions_to_output_label_and_sort
-from src.utils.image_utils import crop_multiple_images_by_bndbox
+from src.utils.image_utils import crop_multiple_by_bndbox
 from src.utils.path_utils import check_path_existence
 from src.utils.detection_utils import create_category_index_from_list
 from src.utils.processing_utils import find_button_action_area_by_hough_circles_nms
@@ -46,7 +46,7 @@ class OutputProcessing:
     @staticmethod
     def crop_multiple_images_by_bndbox(images, bndboxes):
         """Crops multiple images from image by provided bounding boxes."""
-        return crop_multiple_images_by_bndbox(images, bndboxes)
+        return crop_multiple_by_bndbox(images, bndboxes)
 
     @staticmethod
     def create_category_index_from_list(label_list):

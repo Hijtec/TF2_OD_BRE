@@ -1,4 +1,4 @@
-from src.utils.image_utils import grayscale_image, unsharp_mask, median_blur_image
+from src.utils.image_utils import grayscale, unsharp_mask, median_blur
 from absl import logging
 import cv2
 import numpy as np
@@ -10,10 +10,10 @@ def find_button_action_area_by_hough_circles_nms(button_image, button_bndbox_in_
     :param button_bndbox_in_input_image: tuple of button bounding box origin (x, y), used for absolute coords ROI.
     :return: ndarray ROI of the action area in button_image
     """
-    gray = grayscale_image(button_image)
-    blurred = median_blur_image(gray, 3)
+    gray = grayscale(button_image)
+    blurred = median_blur(gray, 3)
     sharpened_edges = unsharp_mask(blurred, kernel_size=(5, 5), sigma=5.0, intensity=5.0, threshold=100)
-    sharpened_edges_blurred = median_blur_image(sharpened_edges, 3)
+    sharpened_edges_blurred = median_blur(sharpened_edges, 3)
     circles = __find_hough_circles(sharpened_edges_blurred)
     if circles is None:
         logging.info('Did not found any circles.')
