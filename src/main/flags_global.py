@@ -3,8 +3,6 @@ This module contains all flags used in the project.
 """
 
 from absl import flags
-# from absl import app
-# TODO: run main as app for flags to be loaded and parsed
 
 # Flag names are globally defined!  So in general, we need to be
 # careful to pick names that are unlikely to be used by other libraries.
@@ -19,7 +17,7 @@ flags.DEFINE_string('f', '', 'kernel')  # workaround due to JupyterNotebook
 #####
 # INPUT FEED FLAGS START
 # common
-flags.DEFINE_enum('image_input_mode', 'video', ['camera', 'video', 'folder'], 'Source of image data.')
+flags.DEFINE_enum('image_input_mode', 'folder', ['camera', 'video', 'folder'], 'Source of image data.')
 flags.DEFINE_enum('location_input_mode', 'pos_constant', ['pos_constant', 'reserved'], 'Source of location data.')
 
 # image_feed_camera

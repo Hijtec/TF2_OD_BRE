@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+from src.utils.image_utils import equalize, crop_to_area_above_threshold
 import cv2
 
 
@@ -24,3 +25,12 @@ def variance_of_laplacian(image):
 
 def is_image_blurry(image, threshold=100):
     return detect_blur(image, threshold)
+
+
+def equalize_image(image):
+    return equalize(image)
+
+
+def crop_black_borders(image):
+    return crop_to_area_above_threshold(image, threshold=0)
+
