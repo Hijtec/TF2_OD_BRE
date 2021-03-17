@@ -86,7 +86,8 @@ class RecognizeElevatorElements:
         if detection_buttons_roi is None:
             image_with_classification = input_data['ImageData']
         self.output_viz.save_as_png(self.input_process.crop_black_outlines(image_with_classification),
-                                    PATH_OUTPUT_TEST_CLASSIFICATION + os.sep + f"{self.visualization_index}classification.png")
+                                    PATH_OUTPUT_TEST_CLASSIFICATION + os.sep +
+                                    f"{self.visualization_index}classification.png")
         self.visualization_index += 1
         return
 

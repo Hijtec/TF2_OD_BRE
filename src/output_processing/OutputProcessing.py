@@ -14,9 +14,9 @@ from src.utils.processing_utils import find_button_action_area_by_hough_circles_
 class OutputProcessing:
     def __init__(self, label_map_path):
         self.label_map_path = label_map_path
-        self.category_index_detection = self.__get_category_index_detection(label_map_path)
+        self.category_index_detection = self._get_category_index_detection(label_map_path)
 
-    def __get_category_index_detection(self, label_map_path):
+    def _get_category_index_detection(self, label_map_path):
         check_path_existence(label_map_path, self.__class__.__name__)
         category_index_detection_raw = create_category_index(label_map_path)
         index = 1
@@ -36,6 +36,8 @@ class OutputProcessing:
 
     @staticmethod
     def filter_highest_classifications(button_classifications):
+        """Reduces classification to only the highest score label."""
+        logging.info('Filtered highest classifications per button.')
         button_classes, button_scores = [], []
         for button in button_classifications:
             class_index = np.argmax(button[0], axis=0)
@@ -96,3 +98,9 @@ class OutputProcessing:
 
         action_area_bndboxes = np.array(action_area_bndboxes)
         return action_area_bndboxes
+
+    @staticmethod
+    def relabel_wrong_buttons(button_bndboxes, button_classifications):
+        """Relabels wrong buttons based on their position numbering and ambiguous classifications."""
+        pass
+        # TODO: implement
