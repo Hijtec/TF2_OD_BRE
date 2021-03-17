@@ -117,11 +117,11 @@ def non_max_suppression_slow(boxes, overlap_threshold=0.0):
     return boxes[pick]  # return only the bounding boxes that were picked
 
 
-def move_bndbox_by_xy(bndbox, xy):
+def move_bndbox_by_xy(bndbox, yx):
     """Move bounding box by x and y coordinates."""
-    x, y = xy[0], xy[1]
-    bndbox[0] += x
-    bndbox[1] += y
-    bndbox[2] += x
-    bndbox[3] += y
+    y, x = yx[0], yx[1]
+    bndbox[0] += y
+    bndbox[1] += x
+    bndbox[2] += y
+    bndbox[3] += x
     return bndbox

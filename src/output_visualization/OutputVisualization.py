@@ -3,6 +3,7 @@
 from src.models.research.object_detection.utils.visualization_utils import save_image_array_as_png, \
     draw_bounding_boxes_on_image_array, visualize_boxes_and_labels_on_image_array
 from src.utils.visualization_utils import draw_ellipses_in_bndboxes_on_image_array
+import numpy as np
 
 
 class OutputVisualization:
@@ -20,6 +21,27 @@ class OutputVisualization:
     def draw_ellipses_on_image_from_bndboxes(np_image, bndboxes, color='red', thickness=3, use_normalized_coords=True):
         """Draws ellipses from boxes upon image with provided color and thickness."""
         draw_ellipses_in_bndboxes_on_image_array(np_image, bndboxes, color, thickness, use_normalized_coords)
+
+    @staticmethod
+    def draw_bndbox_middle_on_image_from_bndboxes(np_image, bndboxes, color='red', thickness=3, use_normalized_coords=True):
+        """Draws middle points from boxes upon image with provided color and thickness."""
+        bndboxes_middle_reduced = []
+        for bndbox in bndboxes:
+            if use_normalized_coords:
+                mid_y = (bndbox[0] + bndbox[2])/2
+                mid_x = (bndbox[1] + bndbox[3])/2
+                dist_y = thickness / np_image.shape[0]
+                dist_x = thickness / np_image.shape[1]
+                bndbox = [mid_y - dist_y, mid_x - dist_x, mid_y + dist_y, mid_x + dist_x]
+            else:
+                mid_y = ((bndbox[0] + bndbox[2])/2) / np_image.shape[0]
+                mid_x = ((bndbox[1] + bndbox[3])/2) / np_image.shape[1]
+                dist_y = thickness / np_image.shape[0]
+                dist_x = thickness / np_image.shape[1]
+                bndbox = [mid_y - dist_y, mid_x - dist_x, mid_y + dist_y, mid_x + dist_x]
+            bndboxes_middle_reduced.append(bndbox)
+        bndboxes_middle_reduced = np.array(bndboxes_middle_reduced)
+        draw_bounding_boxes_on_image_array(np_image, bndboxes_middle_reduced, color, thickness)
 
     @staticmethod
     def visualize_on_image(np_image, bndboxes, classes, scores=None, category_index=None,
