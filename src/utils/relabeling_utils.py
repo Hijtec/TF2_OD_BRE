@@ -127,6 +127,7 @@ class Template:
         self.seq_is_correct = self.find_seq_error()
         self.seq_corrected, self.seq_is_correct_corrected = self.fix_seq(self.seq)
         self.buttons_ordered_corrected = self.order_buttons()
+        self.visualize_buttons()
 
     def assign_template_params(self):
         """Counts the ranks of possible numbering sequence, assigns counting priority_XX to Template."""
@@ -165,7 +166,10 @@ class Template:
             first_row_suppressed
         """
         # Determining the direction in which we will count rank.
-        direction = 1 if forwards is True else direction = -1
+        if forwards:
+            direction = 1
+        else:
+            direction = -1
 
         # Making an iterable list.
         listed_numbers = []
@@ -187,8 +191,10 @@ class Template:
                     listed_numbers.append(self.buttons_raw[i].n_raw)
 
         # Defining starting positions to count from.
-        curr = 0 if direction == 1 else curr = -1  # starting entry
-        foll = 0 if direction == 1 else foll = -1  # starting following entry
+        if direction == 1:
+            curr, foll = 0, 0
+        else:
+            curr, foll = -1, -1
         rank = 0
 
         # Iterating through the list.
@@ -196,8 +202,6 @@ class Template:
             foll += direction
             if listed_numbers[curr] < listed_numbers[foll]:
                 rank += 1  # The sequence suits the chosen direction.
-            else:
-                pass  # The sequence doesn't suit the chosen direction.
             curr = foll
         return rank, first_row_suppressed
 
@@ -268,7 +272,7 @@ class Template:
                     seq.append(self.buttons_raw[row[curr]].n_raw)
                     curr += 1
         elif not self.priority_vh:
-            rows_suppressed, __, del_index = self._suppress_odd_rows()
+            rows_suppressed, __, del_index = self._suppress_odd_rows(self.rows)
             cols_suppressed = self._recalculate_cols(rows_suppressed)
 
             if self.priority_lr:
@@ -329,7 +333,7 @@ class Template:
 
                 while not found_valid_number:
                     if valid_number_index >= len(seq_is_correct):
-                        print("loop broken")
+                        print("Could not find valid number.")
                         valid_number_index = valid_number_index - 1
                         break
                     if seq_is_correct[valid_number_index]:
@@ -340,11 +344,12 @@ class Template:
                 if (abs(seq[seq_index - 1] - seq[valid_number_index])) == (abs(valid_number_index - (seq_index - 1))):
                     # TODO: check this iterator
                     for i in range(seq_index, valid_number_index):
+                        number_changed = seq[i]
                         seq[i] = seq[seq_index - 1] + (seq_index - i) + 1
                         seq_numbers_corrected.append(seq[i])
                         seq_index_corrected.append(i)
                         seq_is_correct[seq_index] = True
-                        print(f"Replaced index({i}) with number({seq[i]})")
+                        print(f"Replaced index({i}) with number({number_changed}->{seq[i]})")
 
                 elif (abs(seq[seq_index - 1] - seq[valid_number_index])) != (abs(valid_number_index - (seq_index - 1))):
                     print("Jump button detected.")
@@ -388,7 +393,8 @@ class Template:
             col_index += 1
             for item in col:
                 button_list[item].col = col_index
-
-        for but in self.buttons:
-            print(but.__dict__)
         return button_list
+
+    def visualize_buttons(self):
+        for but in self.buttons_ordered_corrected:
+            print(but.__dict__)

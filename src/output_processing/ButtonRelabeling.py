@@ -86,8 +86,8 @@ class RelabelButtons:
 
     def create_template(self):
         """Creates a template object."""
-        rows, rows_all, r_val_hist = self.find_classes("row")
-        cols, cols_all, c_val_hist = self.find_classes("col")
+        rows, rows_all, r_val_hist = self.find_classes(axis=1)
+        cols, cols_all, c_val_hist = self.find_classes(axis=0)
 
         if len(rows) > 1/self.but[1]:
             logging.fatal("There can't be more rows than can physically fit into state space!")
@@ -127,7 +127,6 @@ class RelabelButtons:
         for _ in self.detected:
             same_class = []
             j = -1
-
             i += 1
             compare_val = self.detected[i][axis]
 
@@ -136,7 +135,7 @@ class RelabelButtons:
                 val = d[axis]
                 if abs(val - compare_val) < self.but[axis] / 2:
                     same_class.append(j)
-                    compare_val = compare_val + (val - compare_val) / self.adj_cooef
+                    compare_val = compare_val + (val - compare_val) / self.adj_coefficient
 
             sames.append(same_class)
             comp_val_history.append(
