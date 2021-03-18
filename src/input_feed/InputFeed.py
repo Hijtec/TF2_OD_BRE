@@ -57,6 +57,13 @@ class InputFeed:
         return True
         # TODO: raise errors if some data is invalid
 
+    @staticmethod
+    def validate_data_batch(data_batch):
+        for key, value in data_batch:
+            if value is None:
+                return False
+        return True
+
     def next_input_data_batch(self):
         self.get_next_input_data()
         self.data_batch = self.Data.copy()
@@ -65,10 +72,12 @@ class InputFeed:
     def get_input_data_batch(self):
         self.next_input_data_batch()
         if self.data_batch_ready is True:
-            data_to_return = self.data_batch.copy()
+            data_batch = self.data_batch.copy()
+            data_batch_is_valid = self.validate_data_batch(data_batch)
             self.data_batch = {}
             self.data_batch_ready = False
-            return data_to_return
+            return data_batch, data_batch_is_valid
         else:
             raise AttributeError('Trying to get old values, create new input data batch.')
+
 

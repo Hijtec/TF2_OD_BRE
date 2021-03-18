@@ -27,9 +27,9 @@ class RecognizeElevatorElements:
     def recognize_elevator_elements(self):
         """Main loop content of the project."""
         # INPUT
-        input_data = self.input_feed.get_input_data_batch()
-        if input_data is None:
-            logging.warning('No InputData. Skipping.')
+        input_data, input_data_is_valid = self.input_feed.get_input_data_batch()
+        if not input_data_is_valid:
+            logging.warning('InputData not valid. Skipping.')
             return
         """
         input_data['ImageData'] = self.input_process.equalize_image(input_data['ImageData'])
