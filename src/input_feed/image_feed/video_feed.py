@@ -37,7 +37,8 @@ class VideoFeedAsync(ImageFeed):
         self.open_video()
         self.check, frame_raw = self.cap.read()
         if self.check:
-            self.frame = cv2.cvtColor(frame_raw, cv2.COLOR_BGR2RGB)
+            self.frame = frame_raw
+            # self.frame = cv2.cvtColor(frame_raw, cv2.COLOR_BGR2RGB)
         else:
             self.frame = None
 
