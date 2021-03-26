@@ -22,8 +22,10 @@ class InputFeed:
         # Assigning Image Sources
         if FLAGS.image_input_mode == 'camera':
             self.DataSources['ImageSource'] = camera_feed.CameraFeedAsync()
-        elif FLAGS.image_input_mode == 'video':
-            self.DataSources['ImageSource'] = video_feed.VideoFeedAsync()
+        elif FLAGS.image_input_mode == 'video_per_frame':
+            self.DataSources['ImageSource'] = video_feed.VideoFeedAsync(frame_capture=True)
+        elif FLAGS.image_input_mode == 'video_async':
+            self.DataSources['ImageSource'] = video_feed.VideoFeedAsync(frame_capture=False)
         elif FLAGS.image_input_mode == 'folder':
             self.DataSources['ImageSource'] = folder_feed.FolderFeedSync()
         else:
@@ -59,7 +61,7 @@ class InputFeed:
 
     @staticmethod
     def validate_data_batch(data_batch):
-        for key, value in data_batch:
+        for key, value in data_batch.items():
             if value is None:
                 return False
         return True
