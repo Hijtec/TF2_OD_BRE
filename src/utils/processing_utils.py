@@ -33,7 +33,7 @@ def find_button_action_area_by_hough_circles_nms(button_image, button_bndbox_in_
     return bboxes_absolute_coords
 
 
-def __find_hough_circles(image, circles_to_find=3, accumulator_start=1.0, minimum_distance=1, accumulator_threshold=60):
+def __find_hough_circles(image, circles_to_find=3, accumulator_start=1.0, accumulator_max=5.0, minimum_distance=1, accumulator_threshold=60):
     """
     :param image: ndarray of shape (width, height, channels)
     :param circles_to_find: int number of circles to find in image
@@ -47,7 +47,7 @@ def __find_hough_circles(image, circles_to_find=3, accumulator_start=1.0, minimu
     accumulator = accumulator_start
     n_circles_found = 0
     circles = None
-    while (n_circles_found < circles_to_find) and (accumulator <= 5):
+    while (n_circles_found < circles_to_find) and (accumulator <= accumulator_max):
         circles = cv2.HoughCircles(image=image,
                                    method=cv2.HOUGH_GRADIENT,
                                    dp=accumulator,
