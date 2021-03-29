@@ -19,7 +19,8 @@ class RecognizeElevatorElements:
         self.input_process = InputProcessing()
         self.element_detection = ElementDetection()
         self.floor_classification = FloorButtonClassification()
-        self.output_process = OutputProcessing(FLAGS.label_map_path_detection)
+        self.output_process = OutputProcessing(FLAGS.label_map_path_detection,
+                                               FLAGS.label_map_path_button_classification)
         self.postprocessing = None  # TODO: these parts are not yet implemented
         self.output_viz = OutputVisualization()
         self.visualization_index = 0
@@ -57,20 +58,22 @@ class RecognizeElevatorElements:
             button_classifications = self.floor_classification.classify_next_images(detection_buttons_roi,
                                                                                     input_size=(224, 224))
             # TODO: detect irregularities
-            button_labels = [-1, -2, 0, 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 3, 4, 5, 6, 7, 8, 9]
-            category_index_classification = self.output_process.create_category_index_from_list(button_labels)
+            # button_labels = [-1, -2, 0, 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 3, 4, 5, 6, 7, 8, 9]
+            # category_index_classification = self.output_process.create_category_index_from_list(button_labels)
+            category_index_classification = self.output_process.get_category_index_classification()
             btn_highest_classes, btn_highest_scores = self.output_process.filter_highest_classifications(
                 button_classifications)
             classifications = {'detection_boxes': detection_buttons['detection_boxes_nms'],
                                'classification_classes': btn_highest_classes,
                                'classification_scores': btn_highest_scores}
 
-            image_with_action_areas = input_data['ImageData'].copy()
             action_area_bndboxes = self.output_process.find_buttons_action_areas(detection_buttons_roi,
                                                                                  detection_buttons[
                                                                                      'detection_boxes_nms'],
                                                                                  input_data['ImageData'],
                                                                                  output_relative_coords=True)
+
+            image_with_action_areas = input_data['ImageData'].copy()
             self.output_viz.draw_bndbox_middle_on_image_from_bndboxes(image_with_action_areas,
                                                                       action_area_bndboxes,
                                                                       use_normalized_coords=True)
@@ -81,8 +84,10 @@ class RecognizeElevatorElements:
                                                                                          classifications,
                                                                                          category_index_classification)
 
-        PATH_OUTPUT_TEST_DETECTION = r"C:\Users\cernil\OneDrive - Y Soft Corporation a.s\betapresentation_visualisation\outputs\detection"
-        PATH_OUTPUT_TEST_CLASSIFICATION = r"C:\Users\cernil\OneDrive - Y Soft Corporation a.s\betapresentation_visualisation\outputs\classification"
+        PATH_OUTPUT_TEST_DETECTION = r"C:\Users\cernil\OneDrive - Y Soft Corporation " \
+                                     r"a.s\betapresentation_visualisation\outputs\detection"
+        PATH_OUTPUT_TEST_CLASSIFICATION = r"C:\Users\cernil\OneDrive - Y Soft Corporation " \
+                                          r"a.s\betapresentation_visualisation\outputs\classification"
         self.output_viz.save_as_png(self.input_process.crop_black_outlines(image_with_detections),
                                     PATH_OUTPUT_TEST_DETECTION + os.sep + f"{self.visualization_index}detection.png")
         if detection_buttons_roi is None:

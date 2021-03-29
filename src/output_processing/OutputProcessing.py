@@ -12,11 +12,14 @@ from src.utils.processing_utils import find_button_action_area_by_hough_circles_
 
 
 class OutputProcessing:
-    def __init__(self, label_map_path):
-        self.label_map_path = label_map_path
-        self.category_index_detection = self._get_category_index_detection(label_map_path)
+    def __init__(self, label_map_path_detection, label_map_path_classification):
+        self.label_map_path_detection = label_map_path_detection
+        self.label_map_path_classification = label_map_path_classification
 
-    def _get_category_index_detection(self, label_map_path):
+        self.category_index_detection = self._get_category_index(label_map_path_detection)
+        self.category_index_classification = self._get_category_index(label_map_path_classification)
+
+    def _get_category_index(self, label_map_path):
         check_path_existence(label_map_path, self.__class__.__name__)
         category_index_detection_raw = create_category_index(label_map_path)
         index = 1
@@ -28,6 +31,9 @@ class OutputProcessing:
 
     def get_category_index_detection(self):
         return self.category_index_detection
+
+    def get_category_index_classification(self):
+        return self.category_index_classification
 
     def reduce_to_one_category(self, detections_nms, category):
         """Reduces detection output to only one specified category."""
