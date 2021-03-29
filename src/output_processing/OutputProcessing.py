@@ -17,12 +17,17 @@ class OutputProcessing:
         self.label_map_path_classification = label_map_path_classification
 
         self.category_index_detection = self._get_category_index(label_map_path_detection)
-        self.category_index_classification = self._get_category_index(label_map_path_classification)
+        self.category_index_classification = self._get_category_index(label_map_path_classification,
+                                                                      ignore_background_category=True)
 
-    def _get_category_index(self, label_map_path):
+    def _get_category_index(self, label_map_path, ignore_background_category=False):
         check_path_existence(label_map_path, self.__class__.__name__)
         category_index_detection_raw = create_category_index(label_map_path)
-        index = 1
+        if ignore_background_category:
+            index = 0
+        else:
+            index = 1
+
         category_index_detection = {}
         for entry in category_index_detection_raw:
             category_index_detection[index] = entry

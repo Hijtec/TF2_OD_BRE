@@ -57,9 +57,6 @@ class RecognizeElevatorElements:
         if detection_buttons_roi is not None:
             button_classifications = self.floor_classification.classify_next_images(detection_buttons_roi,
                                                                                     input_size=(224, 224))
-            # TODO: detect irregularities
-            # button_labels = [-1, -2, 0, 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 3, 4, 5, 6, 7, 8, 9]
-            # category_index_classification = self.output_process.create_category_index_from_list(button_labels)
             category_index_classification = self.output_process.get_category_index_classification()
             btn_highest_classes, btn_highest_scores = self.output_process.filter_highest_classifications(
                 button_classifications)
