@@ -50,7 +50,6 @@ flags.DEFINE_string('classification_floor_button_model_path', r"C:\Users\cernil\
                     'PATH to a SavedModel file capable of classification of elevator floor buttons.')
 flags.DEFINE_enum('classification_floor_button_model_type', 'keras',
                   ['keras', 'reserved'], 'Type of classification model used - RESERVED.')
-# TODO: utilize this flags
 flags.DEFINE_string('label_map_path_button_classification',
                     r"C:\Users\cernil\OneDrive - Y Soft Corporation a.s\DeepLearningBlackbox\test\output\pascal_label_map_classification.pbtxt",
                     'PATH to the label_map.txt | label_map.pbtxt file for button classification .')
