@@ -200,7 +200,8 @@ class Template:
         # Iterating through the list.
         for _ in range(len(listed_numbers) - 1):
             foll += direction
-            if listed_numbers[curr] < listed_numbers[foll]:
+            absdiff = abs(listed_numbers[foll]) - abs(listed_numbers[curr])
+            if listed_numbers[curr] < listed_numbers[foll] and absdiff < 3:
                 rank += 1  # The sequence suits the chosen direction.
             curr = foll
         return rank, first_row_suppressed
