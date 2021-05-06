@@ -21,7 +21,7 @@ class RecognizeElevatorElements:
         self.floor_classification = FloorButtonClassification()
         self.output_process = OutputProcessing(FLAGS.label_map_path_detection,
                                                FLAGS.label_map_path_button_classification)
-        self.postprocessing = None  # TODO: these parts are not yet implemented
+        self.postprocessing = None  # TODO: these parts are not yet fully implemented, used ad-hoc
         self.output_viz = OutputVisualization()
         self.visualization_index = 0
 
@@ -41,7 +41,6 @@ class RecognizeElevatorElements:
         # DETECTION
         category_index_detection = self.output_process.get_category_index_detection()
         detection_data = self.element_detection.detect_next_image(input_data['ImageData'])
-        # TODO: detect irregularities
         if detection_data is None:
             logging.warning('Did not detect anything. Skipping.')
             return
@@ -63,7 +62,7 @@ class RecognizeElevatorElements:
             classifications = {'detection_boxes': detection_buttons['detection_boxes_nms'],
                                'classification_classes': btn_highest_classes,
                                'classification_scores': btn_highest_scores}
-
+            # FINDING ACTION AREAS
             action_area_bndboxes = self.output_process.find_buttons_action_areas(detection_buttons_roi,
                                                                                  detection_buttons[
                                                                                      'detection_boxes_nms'],
@@ -71,6 +70,8 @@ class RecognizeElevatorElements:
                                                                                  output_relative_coords=True)
 
             image_with_action_areas = input_data['ImageData'].copy()
+
+            # VISUALIZE
             self.output_viz.draw_bndbox_middle_on_image_from_bndboxes(image_with_action_areas,
                                                                       action_area_bndboxes,
                                                                       use_normalized_coords=True)
@@ -80,17 +81,13 @@ class RecognizeElevatorElements:
             image_with_classification = self.output_viz.visualize_button_classifications(image_with_action_areas,
                                                                                          classifications,
                                                                                          category_index_classification)
-
-        PATH_OUTPUT_TEST_DETECTION = r"C:\Users\cernil\OneDrive - Y Soft Corporation " \
-                                     r"a.s\betapresentation_visualisation\outputs\detection"
-        PATH_OUTPUT_TEST_CLASSIFICATION = r"C:\Users\cernil\OneDrive - Y Soft Corporation " \
-                                          r"a.s\betapresentation_visualisation\outputs\classification"
+        # SAVE
         self.output_viz.save_as_png(self.input_process.crop_black_outlines(image_with_detections),
-                                    PATH_OUTPUT_TEST_DETECTION + os.sep + f"{self.visualization_index}detection.png")
+                                    FLAGS.output_image_save_detection + os.sep + f"{self.visualization_index}detection.png")
         if detection_buttons_roi is None:
             image_with_classification = input_data['ImageData']
         self.output_viz.save_as_png(self.input_process.crop_black_outlines(image_with_classification),
-                                    PATH_OUTPUT_TEST_CLASSIFICATION + os.sep +
+                                    FLAGS.output_image_save_classification + os.sep +
                                     f"{self.visualization_index}classification.png")
         self.visualization_index += 1
         return
